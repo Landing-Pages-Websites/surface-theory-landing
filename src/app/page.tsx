@@ -124,8 +124,8 @@ export default function SurfaceTheoryLanding() {
         setError('');
       }
     } catch (err) {
-      setError("There was an error submitting your request. Please try again.");
       console.error("Form submission error:", err);
+      setError(`Submission failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
