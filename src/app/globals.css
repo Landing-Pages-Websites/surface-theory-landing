@@ -2,209 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS Variables matching Surface Theory's exact branding */
-:root {
-  --color-charcoal: #1a1a1a;
-  --color-charcoal-dark: #0f1419;
-  --color-charcoal-light: #2d2d2d;
-  --color-bone: #f8f6f0;
-  --color-bone-light: #faf9f5;
-  --color-brass: #c5a46d;
-  --color-brass-dark: #a68a5a;
-  --color-brass-light: #d4b87c;
-}
-
-/* Container classes matching their layout */
-.container-responsive {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container-responsive {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-responsive {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-.container-editorial {
-  max-width: 72rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container-editorial {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-editorial {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Typography matching their exact fonts */
+/* Typography */
 .font-serif {
   font-family: 'Cormorant Garamond', serif;
 }
 
-.font-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-weight: 500;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Hero section styling matching their site exactly */
-.hero-cinematic {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--color-charcoal-dark) 0%, #1a2332 50%, #2c3e50 100%);
-}
-
-.hero-cinematic-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
-/* Button styles matching their exact design */
-.btn-brass {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--color-brass);
-  color: var(--color-bone);
-  font-weight: 600;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.btn-brass:hover {
-  background-color: var(--color-brass-light);
-}
-
-.btn-outline-light {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  border: 2px solid rgba(248, 246, 240, 0.3);
-  color: var(--color-bone);
-  font-weight: 600;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-}
-
-.btn-outline-light:hover {
-  border-color: rgba(248, 246, 240, 0.6);
-  background-color: rgba(248, 246, 240, 0.1);
-}
-
-/* Color classes matching their exact palette */
-.bg-charcoal {
-  background-color: var(--color-charcoal);
-}
-
-.bg-charcoal-dark {
-  background-color: var(--color-charcoal-dark);
-}
-
-.bg-charcoal-light {
-  background-color: var(--color-charcoal-light);
-}
-
-.bg-bone {
-  background-color: var(--color-bone);
-}
-
-.bg-bone-light {
-  background-color: var(--color-bone-light);
-}
-
-.bg-brass {
-  background-color: var(--color-brass);
-}
-
-.text-charcoal {
-  color: var(--color-charcoal);
-}
-
-.text-charcoal-dark {
-  color: var(--color-charcoal-dark);
-}
-
-.text-bone {
-  color: var(--color-bone);
-}
-
-.text-brass {
-  color: var(--color-brass);
-}
-
-.text-brass-dark {
-  color: var(--color-brass-dark);
-}
-
-.border-charcoal-light {
-  border-color: var(--color-charcoal-light);
-}
-
-.border-brass {
-  border-color: var(--color-brass);
-}
-
-/* Animation classes */
-.animate-fade-in {
-  animation: fadeIn 1s ease-out;
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 1s ease-out;
-}
-
-.delay-200 {
-  animation-delay: 200ms;
-}
-
-.delay-300 {
-  animation-delay: 300ms;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(30px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  animation: fadeInUp 0.6s ease-out;
 }
