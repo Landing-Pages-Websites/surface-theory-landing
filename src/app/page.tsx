@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { useTracking } from "@/hooks/useTracking";
 import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
 
-const PHONE = "(540) 566-6316";
-const PHONE_HREF = "tel:5405666316";
+const PHONE = "(980) 505-1218";
+const PHONE_HREF = "tel:9805051218";
 
 // Format phone number as user types
 function formatPhone(value: string): string {
@@ -49,7 +48,7 @@ export default function SurfaceTheoryLanding() {
 
   // Initialize tracking
   useTracking({
-    siteKey: "sk_mmee4055_st_virginia_detailing",
+    siteKey: "sk_mmee4055_st_surfaces_nc",
   });
 
   const { submit: submitLead } = useMegaLeadForm();
@@ -106,12 +105,11 @@ export default function SurfaceTheoryLanding() {
       {/* Header: Logo + CTA only — NO nav links */}
       <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur border-b">
         <div className="container-responsive py-4 flex items-center justify-between">
-          {/* Logo placeholder - will be replaced with actual Surface Theory logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">ST</span>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center">
+              <span className="text-white font-bold text-sm">ST</span>
             </div>
-            <div className="font-display text-2xl text-primary">SURFACE THEORY</div>
+            <div className="font-display text-2xl text-slate-800">SURFACE THEORY</div>
           </div>
           
           <div className="flex items-center gap-4">
@@ -119,53 +117,62 @@ export default function SurfaceTheoryLanding() {
               {PHONE}
             </a>
             <a href="#contact" className="btn-primary">
-              Get Free Estimate
+              Get Quote
             </a>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center bg-gradient-to-br from-secondary via-slate-800 to-slate-900 text-white">
+      <section id="hero" className="min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
         <div className="container-responsive grid lg:grid-cols-2 gap-12 items-center py-20">
           {/* Left: Headlines & Copy */}
           <div className="space-y-8">
             <Reveal>
               <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm">
-                PRECISION. PASSION. PERFECTION.
+                PREMIUM MATERIALS • EXPERT INSTALLATION
               </span>
               <h1 className="font-display text-5xl lg:text-7xl text-white leading-tight">
-                PREMIUM AUTO <span className="text-gradient">DETAILING</span>
+                WHERE <span className="text-amber-400">CRAFTSMANSHIP</span> MEETS MATERIAL SCIENCE
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Transform your vehicle with Virginia's premier auto detailing service. 
-                Specializing in paint correction, ceramic coating, interior deep cleaning, 
-                and headlight restoration.
+                Complete interior surface solutions for builders, designers, and contractors. 
+                Premium hardwood flooring, tile & stone, custom staircases, and architectural wall finishes.
               </p>
             </Reveal>
             
             <Reveal delay={200}>
-              <DualCTA primary="Get My Free Estimate" href="#contact" />
+              <div className="grid grid-cols-2 gap-6 py-6">
+                <div className="text-center">
+                  <div className="font-display text-3xl text-amber-400">15+</div>
+                  <div className="text-sm text-gray-400 uppercase tracking-wider">Years Experience</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-display text-3xl text-amber-400">500+</div>
+                  <div className="text-sm text-gray-400 uppercase tracking-wider">Projects Completed</div>
+                </div>
+              </div>
+              <DualCTA primary="Get Project Quote" href="#contact" />
             </Reveal>
           </div>
 
           {/* Right: Lead Form */}
           <Reveal delay={300}>
-            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
-              <h2 className="font-display text-2xl text-white mb-6 text-center">
-                Get Your Free Estimate
+            <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border">
+              <h2 className="font-display text-2xl text-slate-800 mb-6 text-center">
+                Get Your Project Quote
               </h2>
               
               {isSubmitted ? (
                 <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mx-auto">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h3 className="text-xl text-white">Thank You!</h3>
-                  <p className="text-gray-300">
-                    We'll contact you within 2 hours to schedule your free estimate.
+                  <h3 className="text-xl text-slate-800">Thank You!</h3>
+                  <p className="text-gray-600">
+                    We'll contact you within 2 hours to discuss your surface project requirements.
                   </p>
                 </div>
               ) : (
@@ -177,7 +184,7 @@ export default function SurfaceTheoryLanding() {
                       placeholder="First Name"
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="form-field"
+                      className="form-field bg-white"
                       required
                     />
                     <input
@@ -186,7 +193,7 @@ export default function SurfaceTheoryLanding() {
                       placeholder="Last Name"
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="form-field"
+                      className="form-field bg-white"
                       required
                     />
                   </div>
@@ -197,7 +204,7 @@ export default function SurfaceTheoryLanding() {
                     placeholder="Email Address"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="form-field"
+                    className="form-field bg-white"
                     required
                   />
                   
@@ -208,15 +215,15 @@ export default function SurfaceTheoryLanding() {
                     placeholder="(555) 123-4567"
                     value={formData.phone}
                     onChange={handlePhoneChange}
-                    className="form-field"
+                    className="form-field bg-white"
                     pattern="^\(\d{3}\) \d{3}-\d{4}$"
                     title="Please enter a valid 10-digit phone number"
                     required
                   />
                   
                   <div className="space-y-2">
-                    <p className="text-sm font-medium text-white">
-                      Our premium detailing services start at $150. Is this within your budget?
+                    <p className="text-sm font-medium text-slate-700">
+                      Our premium surface projects start at $5,000. Is this within your budget?
                     </p>
                     <div className="flex gap-3">
                       <label className="flex-1 cursor-pointer">
@@ -228,7 +235,7 @@ export default function SurfaceTheoryLanding() {
                           className="sr-only peer" 
                           required 
                         />
-                        <div className="peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white border-2 border-gray-400 text-gray-300 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-primary">
+                        <div className="peer-checked:bg-amber-600 peer-checked:border-amber-600 peer-checked:text-white border-2 border-gray-300 text-gray-700 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-amber-600">
                           Yes
                         </div>
                       </label>
@@ -240,7 +247,7 @@ export default function SurfaceTheoryLanding() {
                           onChange={(e) => setFormData({...formData, budget: e.target.value})}
                           className="sr-only peer" 
                         />
-                        <div className="peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white border-2 border-gray-400 text-gray-300 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-primary">
+                        <div className="peer-checked:bg-amber-600 peer-checked:border-amber-600 peer-checked:text-white border-2 border-gray-300 text-gray-700 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-amber-600">
                           No
                         </div>
                       </label>
@@ -248,7 +255,7 @@ export default function SurfaceTheoryLanding() {
                   </div>
                   
                   {error && (
-                    <div className="text-red-400 text-sm bg-red-400/10 p-3 rounded">
+                    <div className="text-red-600 text-sm bg-red-50 p-3 rounded">
                       {error}
                     </div>
                   )}
@@ -257,11 +264,11 @@ export default function SurfaceTheoryLanding() {
                     type="submit"
                     className="btn-primary w-full text-lg py-4"
                   >
-                    Get My Free Estimate
+                    Get My Project Quote
                   </button>
                   
-                  <p className="text-gray-400 text-xs text-center">
-                    We respect your privacy. No spam, ever.
+                  <p className="text-gray-500 text-xs text-center">
+                    Trade professionals only. We respect your privacy.
                   </p>
                 </form>
               )}
@@ -270,45 +277,17 @@ export default function SurfaceTheoryLanding() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section id="stats" className="section-padding bg-surface">
-        <div className="container-responsive">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <Reveal>
-              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">15+</div>
-              <div className="text-sm text-text-light uppercase tracking-wider">Years Experience</div>
-            </Reveal>
-            <Reveal delay={100}>
-              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">2000+</div>
-              <div className="text-sm text-text-light uppercase tracking-wider">Vehicles Detailed</div>
-            </Reveal>
-            <Reveal delay={200}>
-              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">100%</div>
-              <div className="text-sm text-text-light uppercase tracking-wider">Satisfaction Rate</div>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">5.0</div>
-              <div className="text-sm text-text-light uppercase tracking-wider">Average Rating</div>
-            </Reveal>
-          </div>
-          
-          <Reveal delay={400}>
-            <DualCTA primary="Get My Free Estimate" href="#contact" />
-          </Reveal>
-        </div>
-      </section>
-
       {/* Services Section */}
-      <section id="services" className="section-padding bg-background">
+      <section id="services" className="section-padding bg-white">
         <div className="container-responsive">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
-              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
-                Premium Detailing Services
+              <span className="text-amber-600 font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
+              <h2 className="font-display text-4xl lg:text-6xl text-slate-800 mb-6">
+                Premium Surface Solutions
               </h2>
-              <p className="text-xl text-text-light max-w-3xl mx-auto">
-                We use only the finest products and techniques to restore and protect your vehicle's finish.
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Curated for the trade. Premium materials, precision installation, seamless execution.
               </p>
             </div>
           </Reveal>
@@ -316,173 +295,131 @@ export default function SurfaceTheoryLanding() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Paint Correction",
-                description: "Remove swirl marks, scratches, and oxidation to restore your paint's original luster.",
-                icon: ""
+                number: "01",
+                title: "Hardwood Flooring",
+                description: "Pre-finished and sand-finish options crafted for enduring beauty. Domestic and exotic hardwoods that elevate every space."
               },
               {
-                title: "Ceramic Coating",
-                description: "Long-lasting protection that keeps your car looking showroom-fresh for years.",
-                icon: ""
+                number: "02", 
+                title: "Tile & Stone",
+                description: "Premium natural stone and porcelain tile with expert installation. From marble to travertine, precision craftsmanship."
               },
               {
-                title: "Interior Deep Clean",
-                description: "Complete interior restoration including leather conditioning and fabric protection.",
-                icon: ""
+                number: "03",
+                title: "Custom Staircases", 
+                description: "Custom design and precision craftsmanship for statement staircases. Every detail from tread profiles to railing design."
               },
               {
-                title: "Headlight Restoration",
-                description: "Crystal-clear headlights that improve visibility and vehicle appearance.",
-                icon: ""
+                number: "04",
+                title: "Wall Finishes",
+                description: "Wallpaper, specialty coatings, and architectural treatments. Curated selections from the world's finest makers."
               }
             ].map((service, index) => (
-              <Reveal key={service.title} delay={index * 100}>
-                <div className="bg-surface p-8 rounded-2xl shadow-lg card-hover border-l-4 border-primary">
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="font-display text-2xl text-text mb-4">{service.title}</h3>
-                  <p className="text-text-light leading-relaxed">{service.description}</p>
+              <Reveal key={service.number} delay={index * 100}>
+                <div className="bg-slate-50 p-8 rounded-2xl hover:shadow-lg transition-all border-l-4 border-amber-600">
+                  <div className="text-amber-600 font-display text-3xl font-bold mb-4">{service.number}</div>
+                  <h3 className="font-display text-xl text-slate-800 mb-4">{service.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{service.description}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
           <Reveal delay={500}>
-            <DualCTA primary="Get My Free Estimate" href="#contact" />
+            <DualCTA primary="Get Project Quote" href="#contact" />
           </Reveal>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="section-padding bg-surface">
+      {/* Trade Program */}
+      <section className="section-padding bg-slate-800 text-white">
         <div className="container-responsive">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <Reveal>
+              <div>
+                <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm">For Professionals</span>
+                <h2 className="font-display text-4xl lg:text-5xl mb-6">Trade Program</h2>
+                <p className="text-xl text-gray-300 mb-8">
+                  Exclusive access, preferred pricing, and dedicated support for qualified professionals.
+                </p>
+                <div className="grid grid-cols-2 gap-6">
+                  {[
+                    "Trade Pricing",
+                    "Design Support", 
+                    "Sample Service",
+                    "Warranty Backed"
+                  ].map((benefit) => (
+                    <div key={benefit} className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+                      <span className="text-gray-300">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                <h3 className="font-display text-2xl mb-6">Join Our Trade Network</h3>
+                <p className="text-gray-300 mb-6">
+                  Get exclusive access to premium materials and preferred pricing for qualified trade professionals.
+                </p>
+                <a href="#contact" className="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors">
+                  Apply for Trade Access
+                </a>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Locations */}
+      <section className="section-padding bg-white">
+        <div className="container-responsive text-center">
           <Reveal>
-            <div className="text-center mb-16">
-              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Customer Reviews</span>
-              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
-                What Our Clients Say
-              </h2>
-            </div>
+            <span className="text-amber-600 font-semibold tracking-wider uppercase text-sm">Our Reach</span>
+            <h2 className="font-display text-4xl lg:text-5xl text-slate-800 mb-12">North Carolina Locations</h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {[
-              {
-                text: "Surface Theory completely transformed my BMW. The paint correction work was incredible - looks better than when I first bought it!",
-                author: "Mike Johnson",
-                location: "Roanoke, VA",
-                rating: 5
-              },
-              {
-                text: "Professional, thorough, and absolutely worth every penny. The ceramic coating has kept my car looking pristine for over a year.",
-                author: "Sarah Williams",
-                location: "Lynchburg, VA",
-                rating: 5
-              },
-              {
-                text: "Best auto detailing service in Virginia. The attention to detail is unmatched. My interior looks and smells brand new.",
-                author: "David Chen",
-                location: "Richmond, VA",
-                rating: 5
-              }
-            ].map((testimonial, index) => (
-              <Reveal key={index} delay={index * 150}>
-                <div className="bg-background p-8 rounded-2xl shadow-lg border border-border">
-                  <div className="flex text-amber-400 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <span key={i} className="text-xl">⭐</span>
-                    ))}
-                  </div>
-                  <p className="text-text-light leading-relaxed mb-6 italic">"{testimonial.text}"</p>
-                  <div>
-                    <p className="font-semibold text-text">{testimonial.author}</p>
-                    <p className="text-text-light text-sm">{testimonial.location}</p>
-                  </div>
+              { city: "Charlotte", status: "Coming Soon" },
+              { city: "Charleston", status: "Coming Soon" },
+              { city: "Asheville", status: "2026" },
+              { city: "Raleigh", status: "2026" }
+            ].map((location, index) => (
+              <Reveal key={location.city} delay={index * 100}>
+                <div className="text-center">
+                  <h3 className="font-display text-xl text-slate-800 mb-2">{location.city}</h3>
+                  <p className="text-amber-600 font-semibold">{location.status}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
           <Reveal delay={500}>
-            <DualCTA primary="Get My Free Estimate" href="#contact" />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="section-padding bg-background">
-        <div className="container-responsive max-w-4xl mx-auto">
-          <Reveal>
-            <div className="text-center mb-16">
-              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Common Questions</span>
-              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
-                Frequently Asked Questions
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="space-y-6">
-            {[
-              {
-                question: "How long does a typical detail take?",
-                answer: "Most services take 2-6 hours depending on the package. Paint correction can take a full day, while basic washes are completed in 1-2 hours. We'll provide an exact timeframe when you book."
-              },
-              {
-                question: "Do you offer mobile detailing services?",
-                answer: "Yes! We come to your location in Virginia with all our professional equipment. Perfect for busy schedules - we detail your car at home, work, or wherever is convenient."
-              },
-              {
-                question: "How often should I get my car detailed?",
-                answer: "We recommend a full detail every 3-4 months for optimal protection and appearance. Maintenance washes every 2-3 weeks help preserve the results between details."
-              },
-              {
-                question: "Is ceramic coating worth it?",
-                answer: "Absolutely. Ceramic coating provides 2-5 years of protection, makes washing easier, and maintains that 'just detailed' look longer. Most clients say it's the best investment they've made in their vehicle."
-              },
-              {
-                question: "What areas do you serve?",
-                answer: "We serve all of central Virginia including Richmond, Charlottesville, Lynchburg, Roanoke, and surrounding areas. Contact us to confirm service in your specific location."
-              },
-              {
-                question: "Do you guarantee your work?",
-                answer: "Yes, we stand behind every service with a 100% satisfaction guarantee. If you're not completely happy, we'll make it right at no additional cost."
-              }
-            ].map((faq, index) => (
-              <Reveal key={index} delay={index * 100}>
-                <details className="bg-surface p-6 rounded-xl shadow-sm border border-border">
-                  <summary className="font-display text-xl text-text cursor-pointer hover:text-primary transition-colors">
-                    {faq.question}
-                  </summary>
-                  <p className="text-text-light mt-4 leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={700}>
-            <DualCTA primary="Get My Free Estimate" href="#contact" />
+            <DualCTA primary="Get Project Quote" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section id="contact" className="section-padding gradient-red text-white">
+      <section id="contact" className="section-padding bg-gradient-to-br from-slate-900 to-amber-900 text-white">
         <div className="container-responsive text-center">
           <Reveal>
             <h2 className="font-display text-4xl lg:text-6xl mb-6">
-              Ready to Transform Your Vehicle?
+              Ready to Start Your Surface Project?
             </h2>
             <p className="text-xl mb-10 max-w-2xl mx-auto text-white/90">
-              Experience the Surface Theory difference. Get your free estimate today and see why Virginia drivers trust us with their most valuable vehicles.
+              Let's discuss how Surface Theory can elevate your next project with premium materials and expert installation.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <a href="#hero" className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
-                Get My Free Estimate
+              <a href="#hero" className="bg-amber-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-amber-700 transition-colors">
+                Get Project Quote
               </a>
               <div className="flex items-center gap-4">
-                <span className="text-white/80">or call us now:</span>
+                <span className="text-white/80">or call us:</span>
                 <a href={PHONE_HREF} className="font-display text-2xl hover:text-amber-300 transition-colors">
                   {PHONE}
                 </a>
@@ -493,22 +430,22 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-secondary text-white py-8">
+      <footer className="bg-slate-900 text-white py-8">
         <div className="container-responsive text-center">
           <p className="text-white/60 text-sm">
             © 2026 Surface Theory. All rights reserved. | 
-            <a href="#" className="hover:text-primary transition-colors ml-1">Privacy Policy</a> | 
-            <a href="#" className="hover:text-primary transition-colors ml-1">Terms</a>
+            <a href="#" className="hover:text-amber-400 transition-colors ml-1">Privacy Policy</a> | 
+            <a href="#" className="hover:text-amber-400 transition-colors ml-1">Terms</a>
           </p>
         </div>
       </footer>
 
       {/* Floating Sticky CTA */}
       {stickyVisible && (
-        <div className="fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-xl shadow-2xl animate-fade-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-amber-600 text-white p-4 rounded-xl shadow-2xl animate-fade-in">
           <div className="text-center">
-            <a href="#contact" className="block bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm mb-2">
-              Get Estimate
+            <a href="#contact" className="block bg-white text-amber-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm mb-2">
+              Get Quote
             </a>
           </div>
         </div>
