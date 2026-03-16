@@ -1,242 +1,189 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { Reveal } from '@/components/Reveal'
-import { useTracking } from '@/hooks/useTracking'
-import { useMegaLeadForm } from '@/hooks/useMegaLeadForm'
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Reveal } from "@/components/Reveal";
+import { useTracking } from "@/hooks/useTracking";
+import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
+
+const PHONE = "(540) 566-6316";
+const PHONE_HREF = "tel:5405666316";
+
+// Format phone number as user types
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length === 0) return '';
+  if (digits.length <= 3) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
+function isValidPhone(value: string): boolean {
+  return value.replace(/\D/g, '').length === 10;
+}
+
+function DualCTA({ primary, href }: { primary: string; href: string }) {
+  return (
+    <div className="mt-10 flex flex-col items-center gap-3">
+      <a href={href} className="btn-primary text-lg px-8 py-4">
+        {primary}
+      </a>
+      <a href={PHONE_HREF} className="btn-secondary px-6 py-3">
+        Or call us: {PHONE}
+      </a>
+    </div>
+  );
+}
 
 export default function SurfaceTheoryLanding() {
-  const [stickyVisible, setStickyVisible] = useState(false)
+  const [stickyVisible, setStickyVisible] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    projectTimeline: '',
-    services: '',
-    projectDetails: '',
-  })
+    budget: '',
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   // Initialize tracking with placeholder siteKey (will be replaced after MEGA Admin registration)
-  const { trackCTA, trackPhoneClick, trackFormStart } = useTracking({
-    siteKey: 'PLACEHOLDER_SITE_KEY',
-    pixelId: '2193392604526993',
-    debug: true
-  })
+  useTracking({
+    siteKey: "PLACEHOLDER_SITE_KEY",
+  });
 
-  // Initialize form handler
-  const { submitForm, loading, submitted, error, reset } = useMegaLeadForm({
-    siteKey: 'PLACEHOLDER_SITE_KEY',
-    customerId: 'PLACEHOLDER_CUSTOMER_ID',
-    siteId: 'PLACEHOLDER_SITE_ID',
-    notificationEmail: 'sales@surfacetheoryonline.com',
-    onSuccess: () => {
-      console.log('Form submitted successfully!')
-    },
-    onError: (error) => {
-      console.error('Form submission error:', error)
-    }
-  })
+  const { submit: submitLead } = useMegaLeadForm();
 
   // Show sticky CTA after scrolling past hero
   useEffect(() => {
     const handleScroll = () => {
-      setStickyVisible(window.scrollY > window.innerHeight * 0.5)
-    }
+      setStickyVisible(window.scrollY > window.innerHeight * 0.5);
+    };
     
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const formatPhone = (value: string) => {
-    // Strip all non-numeric characters
-    const cleaned = value.replace(/\D/g, '')
-    
-    // Limit to 10 digits
-    const limited = cleaned.slice(0, 10)
-    
-    // Format as (XXX) XXX-XXXX
-    if (limited.length >= 6) {
-      return `(${limited.slice(0, 3)}) ${limited.slice(3, 6)}-${limited.slice(6)}`
-    } else if (limited.length >= 3) {
-      return `(${limited.slice(0, 3)}) ${limited.slice(3)}`
-    } else {
-      return limited
-    }
-  }
-
-  const isValidPhone = (phone: string) => {
-    const cleaned = phone.replace(/\D/g, '')
-    return cleaned.length === 10
-  }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhone(e.target.value)
-    setFormData({ ...formData, phone: formatted })
-  }
+    const formatted = formatPhone(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+  };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     
-    // Validate phone before submission
     if (!isValidPhone(formData.phone)) {
-      return // Form won't submit if phone is invalid
+      setError("Please enter a valid 10-digit phone number");
+      return;
     }
     
-    trackFormStart('surface-theory-lead-form')
-    
-    const success = await submitForm(formData)
-    
-    if (success) {
-      // Reset form on success
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        projectTimeline: '',
-        services: '',
-        projectDetails: '',
-      })
+    if (!formData.budget) {
+      setError("Please select a budget option");
+      return;
     }
-  }
+    
+    try {
+      const result = await submitLead({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        budget: formData.budget,
+      });
 
-  const handleCTAClick = (ctaText: string, section: string) => {
-    trackCTA(ctaText, section)
-    // Scroll to contact form
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const handlePhoneClick = (section: string) => {
-    trackPhoneClick('980-505-1218', section)
-  }
+      if (result.ok) {
+        setIsSubmitted(true);
+        setError('');
+      }
+    } catch (err) {
+      setError("There was an error submitting your request. Please try again.");
+      console.error("Form submission error:", err);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-charcoal-dark text-bone">
-      {/* Header - Logo + CTA */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-charcoal-dark/90 backdrop-blur-sm">
-        <nav className="container-editorial">
-          <div className="flex items-center justify-between h-20 lg:h-24">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-12 relative">
-                <svg viewBox="0 0 40 48" fill="none" className="w-full h-full">
-                  <rect x="1" y="1" width="38" height="46" stroke="#C5A46D" strokeWidth="1.5" fill="none" />
-                  <path d="M20 6 C12 6 8 12 8 18 C8 24 14 28 20 28 C26 28 32 32 32 38 C32 44 26 46 20 46" stroke="#C5A46D" strokeWidth="1.5" fill="none" />
-                </svg>
-              </div>
-              <div className="hidden sm:block">
-                <span className="font-heading text-lg tracking-[0.2em] text-bone block leading-tight">SURFACE</span>
-                <span className="font-heading text-lg tracking-[0.2em] text-bone block leading-tight">THEORY</span>
-              </div>
+    <>
+      {/* Header: Logo + CTA only — NO nav links */}
+      <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur border-b">
+        <div className="container-responsive py-4 flex items-center justify-between">
+          {/* Logo placeholder - will be replaced with actual Surface Theory logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-lg">ST</span>
             </div>
-            
-            {/* Header CTAs */}
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => handlePhoneClick('header')}
-                className="hidden sm:block border-2 border-brass text-brass px-4 py-2 rounded-lg font-medium hover:bg-brass hover:text-charcoal-dark transition-all duration-200"
-              >
-                <a href="tel:980-505-1218">(980) 505-1218</a>
-              </button>
-              <button
-                onClick={() => handleCTAClick('Get Free Estimate', 'header')}
-                className="btn-brass"
-              >
-                Get Free Estimate
-              </button>
-            </div>
+            <div className="font-display text-2xl text-primary">SURFACE THEORY</div>
           </div>
-        </nav>
+          
+          <div className="flex items-center gap-4">
+            <a href={PHONE_HREF} className="hidden sm:flex btn-secondary">
+              {PHONE}
+            </a>
+            <a href="#contact" className="btn-primary">
+              Get Free Estimate
+            </a>
+          </div>
+        </div>
       </header>
 
       {/* Hero Section */}
-      <section id="hero" className="hero-cinematic">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://www.surfacetheoryonline.com/hero.webp"
-            alt="Luxury hardwood flooring in modern home"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-charcoal-dark/60"></div>
-        </div>
-        
-        <div className="container-editorial grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20 relative z-10">
+      <section id="hero" className="min-h-screen flex items-center bg-gradient-to-br from-secondary via-slate-800 to-slate-900 text-white">
+        <div className="container-responsive grid lg:grid-cols-2 gap-12 items-center py-20">
           {/* Left: Headlines & Copy */}
           <div className="space-y-8">
             <Reveal>
-              <span className="font-label text-brass block mb-6 tracking-[0.2em]">Premium Interior Surfaces</span>
-              <h1 className="font-heading text-bone font-light leading-[1.05] text-4xl md:text-5xl lg:text-6xl mb-6">
-                Transform Your Home with <span className="text-brass">Expert Craftsmanship</span>
+              <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm">
+                PRECISION. PASSION. PERFECTION.
+              </span>
+              <h1 className="font-display text-5xl lg:text-7xl text-white leading-tight">
+                PREMIUM AUTO <span className="text-gradient">DETAILING</span>
               </h1>
-              <p className="text-bone/80 text-lg md:text-xl leading-relaxed mb-8">
-                Professional hardwood flooring, tile & stone, cabinetry, and premium interior finishes. 
-                15+ years of experience delivering luxury results for homeowners.
+              <p className="text-xl text-gray-300 leading-relaxed">
+                Transform your vehicle with Virginia's premier auto detailing service. 
+                Specializing in paint correction, ceramic coating, interior deep cleaning, 
+                and headlight restoration.
               </p>
             </Reveal>
             
             <Reveal delay={200}>
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
-                <button
-                  onClick={() => handleCTAClick('Get My Free Estimate', 'hero')}
-                  className="btn-brass text-lg px-8 py-4"
-                >
-                  Get My Free Estimate
-                </button>
-                <button
-                  onClick={() => handlePhoneClick('hero')}
-                  className="btn-outline-light text-lg px-8 py-4"
-                >
-                  <a href="tel:980-505-1218" className="flex items-center gap-2">
-                    Or Call (980) 505-1218
-                  </a>
-                </button>
-              </div>
+              <DualCTA primary="Get My Free Estimate" href="#contact" />
             </Reveal>
           </div>
 
           {/* Right: Lead Form */}
           <Reveal delay={300}>
-            <div className="bg-charcoal-dark/80 backdrop-blur-sm p-8 rounded-2xl border border-brass/20">
-              <h2 className="font-heading text-2xl text-bone mb-6 text-center">
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+              <h2 className="font-display text-2xl text-white mb-6 text-center">
                 Get Your Free Estimate
               </h2>
               
-              {submitted ? (
+              {isSubmitted ? (
                 <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-brass rounded-full flex items-center justify-center mx-auto">
-                    <span className="text-charcoal-dark text-2xl font-bold">OK</span>
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
-                  <h3 className="text-xl text-bone">Thank You!</h3>
-                  <p className="text-bone/80">
-                    We'll contact you within 24 hours to schedule your free estimate.
+                  <h3 className="text-xl text-white">Thank You!</h3>
+                  <p className="text-gray-300">
+                    We'll contact you within 2 hours to schedule your free estimate.
                   </p>
-                  <button
-                    onClick={reset}
-                    className="btn-outline-light mt-4"
-                  >
-                    Submit Another Request
-                  </button>
                 </div>
               ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <input
-                      type="text"
                       name="firstName"
-                      placeholder="First Name*"
+                      type="text"
+                      placeholder="First Name"
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                       className="form-field"
                       required
                     />
                     <input
-                      type="text"
                       name="lastName"
-                      placeholder="Last Name*"
+                      type="text"
+                      placeholder="Last Name"
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                       className="form-field"
@@ -245,9 +192,9 @@ export default function SurfaceTheoryLanding() {
                   </div>
                   
                   <input
-                    type="email"
                     name="email"
-                    placeholder="Email Address*"
+                    type="email"
+                    placeholder="Email Address"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="form-field"
@@ -255,60 +202,50 @@ export default function SurfaceTheoryLanding() {
                   />
                   
                   <input
-                    type="tel"
                     name="phone"
-                    placeholder="Phone Number*"
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="(555) 123-4567"
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     className="form-field"
-                    inputMode="numeric"
                     pattern="^\(\d{3}\) \d{3}-\d{4}$"
+                    title="Please enter a valid 10-digit phone number"
                     required
                   />
                   
-                  <select
-                    name="projectTimeline"
-                    value={formData.projectTimeline}
-                    onChange={(e) => setFormData({...formData, projectTimeline: e.target.value})}
-                    className="form-select"
-                    required
-                  >
-                    <option value="">When do you want to start?*</option>
-                    <option value="Immediately">Immediately</option>
-                    <option value="1-3 months">1-3 months</option>
-                    <option value="3-6 months">3-6 months</option>
-                    <option value="6+ months">6+ months</option>
-                    <option value="Just Exploring">Just Exploring</option>
-                  </select>
-                  
-                  <select
-                    name="services"
-                    value={formData.services}
-                    onChange={(e) => setFormData({...formData, services: e.target.value})}
-                    className="form-select"
-                    required
-                  >
-                    <option value="">Which services interest you?*</option>
-                    <option value="Hardwood Flooring">Hardwood Flooring</option>
-                    <option value="Tile & Stone">Tile & Stone</option>
-                    <option value="Staircases">Staircases</option>
-                    <option value="Interior Trim">Interior Trim</option>
-                    <option value="Wall Finishes">Wall Finishes</option>
-                    <option value="Decking">Decking</option>
-                    <option value="Cabinet CAD">Cabinet CAD</option>
-                    <option value="Finish Packages">Finish Packages</option>
-                    <option value="Garage Remodeling">Garage Remodeling</option>
-                    <option value="Multiple Services">Multiple Services</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  
-                  <textarea
-                    name="projectDetails"
-                    placeholder="Tell us about your project (optional)"
-                    value={formData.projectDetails}
-                    onChange={(e) => setFormData({...formData, projectDetails: e.target.value})}
-                    className="form-textarea"
-                  />
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-white">
+                      Our premium detailing services start at $150. Is this within your budget?
+                    </p>
+                    <div className="flex gap-3">
+                      <label className="flex-1 cursor-pointer">
+                        <input 
+                          type="radio" 
+                          name="budget" 
+                          value="yes" 
+                          onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                          className="sr-only peer" 
+                          required 
+                        />
+                        <div className="peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white border-2 border-gray-400 text-gray-300 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-primary">
+                          Yes
+                        </div>
+                      </label>
+                      <label className="flex-1 cursor-pointer">
+                        <input 
+                          type="radio" 
+                          name="budget" 
+                          value="no" 
+                          onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                          className="sr-only peer" 
+                        />
+                        <div className="peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white border-2 border-gray-400 text-gray-300 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-primary">
+                          No
+                        </div>
+                      </label>
+                    </div>
+                  </div>
                   
                   {error && (
                     <div className="text-red-400 text-sm bg-red-400/10 p-3 rounded">
@@ -318,13 +255,12 @@ export default function SurfaceTheoryLanding() {
                   
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="btn-brass w-full text-lg py-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn-primary w-full text-lg py-4"
                   >
-                    {loading ? 'Submitting...' : 'Get My Free Estimate'}
+                    Get My Free Estimate
                   </button>
                   
-                  <p className="text-bone/60 text-sm text-center">
+                  <p className="text-gray-400 text-xs text-center">
                     We respect your privacy. No spam, ever.
                   </p>
                 </form>
@@ -335,133 +271,95 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Stats Bar */}
-      <section id="stats" className="section-padding bg-charcoal-dark border-t border-brass/20">
-        <div className="container-editorial">
+      <section id="stats" className="section-padding bg-surface">
+        <div className="container-responsive">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <Reveal>
-              <span className="block font-heading text-4xl lg:text-5xl font-light text-brass leading-none">15+</span>
-              <span className="block text-sm text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Years Experience</span>
+              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">15+</div>
+              <div className="text-sm text-text-light uppercase tracking-wider">Years Experience</div>
             </Reveal>
             <Reveal delay={100}>
-              <span className="block font-heading text-4xl lg:text-5xl font-light text-brass leading-none">500+</span>
-              <span className="block text-sm text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Projects Completed</span>
+              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">2000+</div>
+              <div className="text-sm text-text-light uppercase tracking-wider">Vehicles Detailed</div>
             </Reveal>
             <Reveal delay={200}>
-              <span className="block font-heading text-4xl lg:text-5xl font-light text-brass leading-none">100%</span>
-              <span className="block text-sm text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Licensed & Insured</span>
+              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">100%</div>
+              <div className="text-sm text-text-light uppercase tracking-wider">Satisfaction Rate</div>
             </Reveal>
             <Reveal delay={300}>
-              <span className="block font-heading text-4xl lg:text-5xl font-light text-brass leading-none">5</span>
-              <span className="block text-sm text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">States Served</span>
+              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">5★</div>
+              <div className="text-sm text-text-light uppercase tracking-wider">Average Rating</div>
             </Reveal>
           </div>
           
           <Reveal delay={400}>
-            <div className="text-center mt-12">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => handleCTAClick('Get My Free Estimate', 'stats')}
-                  className="btn-brass text-lg px-8 py-4"
-                >
-                  Get My Free Estimate
-                </button>
-                <button
-                  onClick={() => handlePhoneClick('stats')}
-                  className="btn-outline-light text-lg px-8 py-4"
-                >
-                  <a href="tel:980-505-1218">
-                    Or Call (980) 505-1218
-                  </a>
-                </button>
-              </div>
-            </div>
+            <DualCTA primary="Get My Free Estimate" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="section-padding bg-bone-light">
-        <div className="container-editorial">
+      <section id="services" className="section-padding bg-background">
+        <div className="container-responsive">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="font-label text-brass-dark block mb-4 tracking-[0.2em]">Our Expertise</span>
-              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-charcoal mb-6">
-                Premium Interior Services
+              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
+              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
+                Premium Detailing Services
               </h2>
-              <p className="text-charcoal/70 text-lg max-w-2xl mx-auto">
-                From hardwood flooring to custom cabinetry, we deliver exceptional craftsmanship 
-                with premium materials that stand the test of time.
+              <p className="text-xl text-text-light max-w-3xl mx-auto">
+                We use only the finest products and techniques to restore and protect your vehicle's finish.
               </p>
             </div>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                title: "Hardwood Flooring",
-                description: "Pre-finished and sand-finish options crafted for enduring beauty. Premium domestic and exotic hardwoods."
+                title: "Paint Correction",
+                description: "Remove swirl marks, scratches, and oxidation to restore your paint's original luster.",
+                icon: "🎨"
               },
               {
-                title: "Tile & Stone",
-                description: "Natural stone and porcelain tile with expert installation. Marble, travertine, and custom designs."
+                title: "Ceramic Coating",
+                description: "Long-lasting protection that keeps your car looking showroom-fresh for years.",
+                icon: "🛡️"
               },
               {
-                title: "Staircases",
-                description: "Custom design and precision craftsmanship for statement staircases. Every detail considered."
+                title: "Interior Deep Clean",
+                description: "Complete interior restoration including leather conditioning and fabric protection.",
+                icon: "✨"
               },
               {
-                title: "Interior Trim",
-                description: "Architectural trim and custom millwork that adds character and sophistication to any space."
-              },
-              {
-                title: "Wall Finishes",
-                description: "Wallpaper, specialty coatings, and architectural treatments that transform interiors."
-              },
-              {
-                title: "Complete Packages",
-                description: "Full-service interior renovation packages including cabinetry, finish selection, and project management."
+                title: "Headlight Restoration",
+                description: "Crystal-clear headlights that improve visibility and vehicle appearance.",
+                icon: "💡"
               }
             ].map((service, index) => (
               <Reveal key={service.title} delay={index * 100}>
-                <div className="bg-bone p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-brass">
-                  <h3 className="font-heading text-2xl text-charcoal mb-4">{service.title}</h3>
-                  <p className="text-charcoal/70 leading-relaxed mb-6">{service.description}</p>
+                <div className="bg-surface p-8 rounded-2xl shadow-lg card-hover border-l-4 border-primary">
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <h3 className="font-display text-2xl text-text mb-4">{service.title}</h3>
+                  <p className="text-text-light leading-relaxed">{service.description}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal delay={600}>
-            <div className="text-center mt-12">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => handleCTAClick('Get My Free Estimate', 'services')}
-                  className="btn-primary text-lg px-8 py-4"
-                >
-                  Get My Free Estimate
-                </button>
-                <button
-                  onClick={() => handlePhoneClick('services')}
-                  className="btn-secondary text-lg px-8 py-4"
-                >
-                  <a href="tel:980-505-1218">
-                    Or Call (980) 505-1218
-                  </a>
-                </button>
-              </div>
-            </div>
+          <Reveal delay={500}>
+            <DualCTA primary="Get My Free Estimate" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="section-padding bg-charcoal-dark">
-        <div className="container-editorial">
+      <section id="testimonials" className="section-padding bg-surface">
+        <div className="container-responsive">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="font-label text-brass block mb-4 tracking-[0.2em]">Client Reviews</span>
-              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-bone mb-6">
-                What Homeowners Say
+              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Customer Reviews</span>
+              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
+                What Our Clients Say
               </h2>
             </div>
           </Reveal>
@@ -469,35 +367,35 @@ export default function SurfaceTheoryLanding() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                text: "Surface Theory transformed our entire main floor with stunning hardwood. The attention to detail and craftsmanship exceeded our expectations. Highly recommend!",
-                author: "Sarah M.",
-                location: "Charlotte, NC",
+                text: "Surface Theory completely transformed my BMW. The paint correction work was incredible - looks better than when I first bought it!",
+                author: "Mike Johnson",
+                location: "Roanoke, VA",
                 rating: 5
               },
               {
-                text: "Professional, punctual, and absolutely beautiful work. Our new tile bathroom looks like something from a luxury hotel. Worth every penny.",
-                author: "Michael R.",
-                location: "Raleigh, NC",
+                text: "Professional, thorough, and absolutely worth every penny. The ceramic coating has kept my car looking pristine for over a year.",
+                author: "Sarah Williams",
+                location: "Lynchburg, VA",
                 rating: 5
               },
               {
-                text: "The custom staircase they built is now the centerpiece of our home. Everyone who visits comments on the incredible quality and design.",
-                author: "Jennifer L.",
-                location: "Charleston, SC",
+                text: "Best auto detailing service in Virginia. The attention to detail is unmatched. My interior looks and smells brand new.",
+                author: "David Chen",
+                location: "Richmond, VA",
                 rating: 5
               }
             ].map((testimonial, index) => (
               <Reveal key={index} delay={index * 150}>
-                <div className="bg-charcoal-light p-8 rounded-2xl border border-brass/20">
-                  <div className="flex text-brass mb-4">
+                <div className="bg-background p-8 rounded-2xl shadow-lg border border-border">
+                  <div className="flex text-amber-400 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <span key={i}>⭐</span>
+                      <span key={i} className="text-xl">⭐</span>
                     ))}
                   </div>
-                  <p className="text-bone/80 leading-relaxed mb-6 italic">"{testimonial.text}"</p>
+                  <p className="text-text-light leading-relaxed mb-6 italic">"{testimonial.text}"</p>
                   <div>
-                    <p className="font-medium text-bone">{testimonial.author}</p>
-                    <p className="text-bone/60 text-sm">{testimonial.location}</p>
+                    <p className="font-semibold text-text">{testimonial.author}</p>
+                    <p className="text-text-light text-sm">{testimonial.location}</p>
                   </div>
                 </div>
               </Reveal>
@@ -505,35 +403,18 @@ export default function SurfaceTheoryLanding() {
           </div>
 
           <Reveal delay={500}>
-            <div className="text-center mt-12">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => handleCTAClick('Get My Free Estimate', 'testimonials')}
-                  className="btn-brass text-lg px-8 py-4"
-                >
-                  Get My Free Estimate
-                </button>
-                <button
-                  onClick={() => handlePhoneClick('testimonials')}
-                  className="btn-outline-light text-lg px-8 py-4"
-                >
-                  <a href="tel:980-505-1218">
-                    Or Call (980) 505-1218
-                  </a>
-                </button>
-              </div>
-            </div>
+            <DualCTA primary="Get My Free Estimate" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="section-padding bg-bone-light">
-        <div className="container-editorial max-w-4xl mx-auto">
+      <section id="faq" className="section-padding bg-background">
+        <div className="container-responsive max-w-4xl mx-auto">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="font-label text-brass-dark block mb-4 tracking-[0.2em]">Common Questions</span>
-              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-charcoal mb-6">
+              <span className="text-primary font-semibold tracking-wider uppercase text-sm">Common Questions</span>
+              <h2 className="font-display text-4xl lg:text-6xl text-text mb-6">
                 Frequently Asked Questions
               </h2>
             </div>
@@ -542,36 +423,36 @@ export default function SurfaceTheoryLanding() {
           <div className="space-y-6">
             {[
               {
-                question: "How long does a typical flooring project take?",
-                answer: "Most hardwood flooring projects take 3-5 days depending on square footage. Tile projects typically take 4-7 days. We provide detailed timelines during your free estimate."
+                question: "How long does a typical detail take?",
+                answer: "Most services take 2-6 hours depending on the package. Paint correction can take a full day, while basic washes are completed in 1-2 hours. We'll provide an exact timeframe when you book."
               },
               {
-                question: "Do you offer free estimates?",
-                answer: "Yes! We provide free, no-obligation estimates for all our services. We'll visit your home, assess the project, and provide a detailed quote within 24 hours."
+                question: "Do you offer mobile detailing services?",
+                answer: "Yes! We come to your location in Virginia with all our professional equipment. Perfect for busy schedules - we detail your car at home, work, or wherever is convenient."
               },
               {
-                question: "Are you licensed and insured?",
-                answer: "Absolutely. We are fully licensed, bonded, and insured. We provide certificates of insurance upon request and stand behind all our work with comprehensive warranties."
+                question: "How often should I get my car detailed?",
+                answer: "We recommend a full detail every 3-4 months for optimal protection and appearance. Maintenance washes every 2-3 weeks help preserve the results between details."
+              },
+              {
+                question: "Is ceramic coating worth it?",
+                answer: "Absolutely. Ceramic coating provides 2-5 years of protection, makes washing easier, and maintains that 'just detailed' look longer. Most clients say it's the best investment they've made in their vehicle."
               },
               {
                 question: "What areas do you serve?",
-                answer: "We serve Charlotte, Raleigh, Charleston, Asheville, and surrounding areas across North and South Carolina. Contact us to confirm service in your specific location."
+                answer: "We serve all of central Virginia including Richmond, Charlottesville, Lynchburg, Roanoke, and surrounding areas. Contact us to confirm service in your specific location."
               },
               {
-                question: "Do you handle permits and inspections?",
-                answer: "Yes, we handle all necessary permits and coordinate inspections when required. We ensure all work meets local building codes and regulations."
-              },
-              {
-                question: "What's included in your warranty?",
-                answer: "We offer comprehensive warranties on both materials and labor. Specific terms vary by project type - we'll explain all warranty details during your consultation."
+                question: "Do you guarantee your work?",
+                answer: "Yes, we stand behind every service with a 100% satisfaction guarantee. If you're not completely happy, we'll make it right at no additional cost."
               }
             ].map((faq, index) => (
               <Reveal key={index} delay={index * 100}>
-                <details className="bg-bone p-6 rounded-xl shadow-sm border border-charcoal/10">
-                  <summary className="font-heading text-xl text-charcoal cursor-pointer hover:text-brass transition-colors">
+                <details className="bg-surface p-6 rounded-xl shadow-sm border border-border">
+                  <summary className="font-display text-xl text-text cursor-pointer hover:text-primary transition-colors">
                     {faq.question}
                   </summary>
-                  <p className="text-charcoal/70 mt-4 leading-relaxed">
+                  <p className="text-text-light mt-4 leading-relaxed">
                     {faq.answer}
                   </p>
                 </details>
@@ -580,55 +461,31 @@ export default function SurfaceTheoryLanding() {
           </div>
 
           <Reveal delay={700}>
-            <div className="text-center mt-12">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => handleCTAClick('Get My Free Estimate', 'faq')}
-                  className="btn-primary text-lg px-8 py-4"
-                >
-                  Get My Free Estimate
-                </button>
-                <button
-                  onClick={() => handlePhoneClick('faq')}
-                  className="btn-secondary text-lg px-8 py-4"
-                >
-                  <a href="tel:980-505-1218">
-                    Or Call (980) 505-1218
-                  </a>
-                </button>
-              </div>
-            </div>
+            <DualCTA primary="Get My Free Estimate" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section id="contact" className="section-padding bg-brass text-charcoal-dark">
-        <div className="container-editorial text-center">
+      <section id="contact" className="section-padding gradient-red text-white">
+        <div className="container-responsive text-center">
           <Reveal>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl mb-6">
-              Ready to Transform Your Home?
+            <h2 className="font-display text-4xl lg:text-6xl mb-6">
+              Ready to Transform Your Vehicle?
             </h2>
-            <p className="text-xl mb-10 max-w-2xl mx-auto opacity-90">
-              Get your free estimate today and discover why homeowners trust Surface Theory 
-              for their most important interior projects.
+            <p className="text-xl mb-10 max-w-2xl mx-auto text-white/90">
+              Experience the Surface Theory difference. Get your free estimate today and see why Virginia drivers trust us with their most valuable vehicles.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <button
-                onClick={() => handleCTAClick('Get My Free Estimate', 'final-cta')}
-                className="bg-charcoal-dark text-bone px-8 py-4 rounded-lg font-medium text-lg hover:bg-charcoal-light transition-colors duration-200"
-              >
+              <a href="#hero" className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
                 Get My Free Estimate
-              </button>
+              </a>
               <div className="flex items-center gap-4">
-                <span className="text-charcoal-dark/80">or call us now:</span>
-                <button
-                  onClick={() => handlePhoneClick('final-cta')}
-                  className="font-bold text-xl"
-                >
-                  <a href="tel:980-505-1218">(980) 505-1218</a>
-                </button>
+                <span className="text-white/80">or call us now:</span>
+                <a href={PHONE_HREF} className="font-display text-2xl hover:text-amber-300 transition-colors">
+                  {PHONE}
+                </a>
               </div>
             </div>
           </Reveal>
@@ -636,35 +493,26 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-charcoal text-bone py-8">
-        <div className="container-editorial text-center">
-          <p className="text-bone/60 text-sm">
+      <footer className="bg-secondary text-white py-8">
+        <div className="container-responsive text-center">
+          <p className="text-white/60 text-sm">
             © 2026 Surface Theory. All rights reserved. | 
-            <a href="#" className="hover:text-brass transition-colors ml-1">Privacy Policy</a> | 
-            <a href="#" className="hover:text-brass transition-colors ml-1">Terms</a>
+            <a href="#" className="hover:text-primary transition-colors ml-1">Privacy Policy</a> | 
+            <a href="#" className="hover:text-primary transition-colors ml-1">Terms</a>
           </p>
         </div>
       </footer>
 
       {/* Floating Sticky CTA */}
       {stickyVisible && (
-        <div className="fixed bottom-6 right-6 z-50 bg-brass text-charcoal-dark p-4 rounded-xl shadow-2xl border-2 border-brass-light animate-fade-in">
-          <div className="flex flex-col gap-2 text-center">
-            <button
-              onClick={() => handleCTAClick('Get Estimate', 'sticky-cta')}
-              className="bg-charcoal-dark text-bone px-4 py-2 rounded-lg font-medium hover:bg-charcoal-light transition-colors text-sm"
-            >
+        <div className="fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-xl shadow-2xl animate-fade-in">
+          <div className="text-center">
+            <a href="#contact" className="block bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm mb-2">
               Get Estimate
-            </button>
-            <button
-              onClick={() => handlePhoneClick('sticky-cta')}
-              className="font-medium text-sm hover:underline"
-            >
-              <a href="tel:980-505-1218">(980) 505-1218</a>
-            </button>
+            </a>
           </div>
         </div>
       )}
-    </div>
-  )
+    </>
+  );
 }
