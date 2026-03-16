@@ -160,7 +160,7 @@ export default function SurfaceTheoryLanding() {
       </header>
 
       {/* Hero Section - Matching their exact dark luxury aesthetic */}
-      <section id="hero" className="relative min-h-screen flex items-center bg-surface-darker overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex items-center bg-surface-darker overflow-hidden pt-16">
         {/* Background image from their site */}
         <div className="absolute inset-0">
           <img 
@@ -270,10 +270,10 @@ export default function SurfaceTheoryLanding() {
                       name="timeline"
                       value={formData.timeline}
                       onChange={(e) => setFormData({...formData, timeline: e.target.value})}
-                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark"
+                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHN2Zz4K')] bg-no-repeat bg-right bg-[center_right_1rem]"
                       required
                     >
-                      <option value="">How soon are you looking to start your project?</option>
+                      <option value="" disabled className="text-surface-dark/50">Project Timeline</option>
                       <option value="immediately">Immediately</option>
                       <option value="1-3months">1-3 months</option>
                       <option value="3-6months">3-6 months</option>
@@ -285,10 +285,10 @@ export default function SurfaceTheoryLanding() {
                       name="services"
                       value={formData.services}
                       onChange={(e) => setFormData({...formData, services: e.target.value})}
-                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark"
+                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHN2Zz4K')] bg-no-repeat bg-right bg-[center_right_1rem]"
                       required
                     >
-                      <option value="">Which services are you interested in?</option>
+                      <option value="" disabled className="text-surface-dark/50">Services Interested In</option>
                       <option value="hardwoodFlooring">Hardwood Flooring</option>
                       <option value="tileStone">Tile & Stone</option>
                       <option value="staircases">Staircases</option>
