@@ -152,14 +152,15 @@ export default function SurfaceTheoryLanding() {
 
       {/* Hero Section - Matching their exact dark luxury aesthetic */}
       <section id="hero" className="relative min-h-screen flex items-center bg-surface-darker overflow-hidden">
-        {/* Background image overlay like their site */}
-        <div className="absolute inset-0 bg-surface-darker/80"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{
-            backgroundImage: `url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23111"/><circle cx="20" cy="20" r="1" fill="%23222"/><circle cx="80" cy="40" r="1" fill="%23222"/><circle cx="40" cy="80" r="1" fill="%23222"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>')`
-          }}
-        ></div>
+        {/* Background image from their site */}
+        <div className="absolute inset-0">
+          <img 
+            src="/images/hero.webp" 
+            alt="Luxury living room with premium hardwood flooring"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-surface-darker/75"></div>
+        </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -354,27 +355,40 @@ export default function SurfaceTheoryLanding() {
               {
                 number: "01",
                 title: "Hardwood Flooring",
-                description: "Pre-finished and sand-finish hardwood flooring crafted for enduring beauty. We source the finest domestic and exotic hardwoods, delivering timeless elegance that elevates every space."
+                description: "Pre-finished and sand-finish hardwood flooring crafted for enduring beauty. We source the finest domestic and exotic hardwoods, delivering timeless elegance that elevates every space.",
+                image: "/images/hardwood.jpeg"
               },
               {
                 number: "02", 
                 title: "Tile & Stone",
-                description: "Premium natural stone and porcelain tile with expert installation. From marble to travertine, we bring your vision to life with precision craftsmanship and attention to detail."
+                description: "Premium natural stone and porcelain tile with expert installation. From marble to travertine, we bring your vision to life with precision craftsmanship and attention to detail.",
+                image: "/images/tile-stone.jpeg"
               },
               {
                 number: "03",
                 title: "Custom Staircases", 
-                description: "Custom design and precision craftsmanship for statement staircases. Every detail considered and executed, from tread profiles to railing design and finish work."
+                description: "Custom design and precision craftsmanship for statement staircases. Every detail considered and executed, from tread profiles to railing design and finish work.",
+                image: "/images/staircase.jpeg"
               },
               {
                 number: "04",
                 title: "Wall Finishes",
-                description: "Wallpaper, specialty coatings, and architectural wall treatments that transform interiors. Curated selections from the world's finest makers and craftspeople."
+                description: "Wallpaper, specialty coatings, and architectural wall treatments that transform interiors. Curated selections from the world's finest makers and craftspeople.",
+                image: "/images/wall-finishes.jpeg"
               }
             ].map((service, index) => (
               <Reveal key={service.number} delay={index * 150}>
-                <div className="bg-surface-light/30 p-8 lg:p-10 rounded-2xl hover:bg-surface-light/40 transition-all border border-surface-light/20">
-                  <div className="text-brass font-serif text-3xl font-light mb-6">{service.number}</div>
+                <div className="bg-surface-light/30 p-8 lg:p-10 rounded-2xl hover:bg-surface-light/40 transition-all border border-surface-light/20 overflow-hidden">
+                  <div className="relative mb-8">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <div className="text-brass font-serif text-3xl font-light bg-surface-dark/80 px-3 py-1 rounded">{service.number}</div>
+                    </div>
+                  </div>
                   <h3 className="font-serif text-2xl text-surface-cream mb-6">{service.title}</h3>
                   <p className="text-surface-cream/70 leading-relaxed text-lg">{service.description}</p>
                 </div>
@@ -454,6 +468,57 @@ export default function SurfaceTheoryLanding() {
                   Call {PHONE}
                 </a>
               </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Project Gallery Section */}
+      <section className="py-24 bg-surface-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="text-center mb-20">
+              <div className="text-brass text-sm font-semibold tracking-[0.2em] uppercase mb-6">Our Work</div>
+              <h2 className="font-serif text-4xl md:text-5xl text-surface-dark mb-8 font-light">
+                Crafted Spaces
+              </h2>
+              <p className="text-xl text-surface-dark/70 max-w-4xl mx-auto leading-relaxed">
+                Every project reflects our commitment to exceptional craftsmanship and attention to detail.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { src: "/images/modern-kitchen.jpeg", alt: "Modern Kitchen", title: "Contemporary Kitchen" },
+              { src: "/images/master-bath.jpeg", alt: "Master Bath", title: "Luxury Master Bath" },
+              { src: "/images/hardwood.jpeg", alt: "Hardwood Installation", title: "Premium Hardwood" },
+              { src: "/images/tile-stone.jpeg", alt: "Tile & Stone Work", title: "Natural Stone" },
+              { src: "/images/staircase.jpeg", alt: "Custom Staircase", title: "Grand Staircase" },
+              { src: "/images/wall-finishes.jpeg", alt: "Wall Finishes", title: "Architectural Finishes" }
+            ].map((item, index) => (
+              <Reveal key={index} delay={index * 100}>
+                <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all">
+                  <img 
+                    src={item.src} 
+                    alt={item.alt}
+                    className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-6 left-6">
+                      <h3 className="text-surface-cream font-serif text-xl">{item.title}</h3>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={600}>
+            <div className="text-center mt-16">
+              <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+                Start Your Project
+              </a>
             </div>
           </Reveal>
         </div>
