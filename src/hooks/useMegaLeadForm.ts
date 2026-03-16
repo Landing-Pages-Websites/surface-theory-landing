@@ -10,7 +10,7 @@ const CONFIG = {
   CUSTOMER_ID: "86db4f14-3723-4714-8e1e-f4812ad2bfa1",           // UUID from admin panel
   SITE_ID: "1034f2d7-5524-4c37-3049-452c1a94ac54",                   // UUID from Conversions tab
   SOURCE_PROVIDER: "surface-theory-surfaces-nc",   // Unique ID for this page
-  ENDPOINT: "https://events-api.gomega.ai/submit",
+  ENDPOINT: "https://analytics.gomega.ai/submission/submit",
 };
 
 const STORAGE_KEYS = {
@@ -211,8 +211,8 @@ export const useMegaLeadForm = (): UseMegaLeadFormReturn => {
         }
         formData.phone = phoneDigits; // Normalize to digits only
       }
-      if (!formData.firstName || !formData.email || !formData.timeline || !formData.services) {
-        throw new Error("firstName, email, timeline, and services are required");
+      if (!formData.firstName || !formData.lastName || !formData.email) {
+        throw new Error("firstName, lastName, and email are required");
       }
 
       const attribution = initAttribution();
