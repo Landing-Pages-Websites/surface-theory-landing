@@ -58,7 +58,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* MegaTag config — set BEFORE optimizer loads */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.MEGA_TAG_CONFIG={siteKey:"sk_mmee4055_st_surfaces_nc",gtmId:"GTM-TF7R62XS"};window.API_ENDPOINT="https://optimizer.gomega.ai";window.TRACKING_API_ENDPOINT="https://events-api.gomega.ai";`,
+            __html: `window.MEGA_TAG_CONFIG={siteKey:"sk_mmee4055_st_surfaces_nc",siteId:"1034f2d7-5524-4c37-3049-452c1a94ac54",gtmId:"GTM-TF7R62XS"};window.API_ENDPOINT="https://optimizer.gomega.ai";window.TRACKING_API_ENDPOINT="https://events-api.gomega.ai";`,
           }}
         />
         <script id="optimizer-script" src="https://cdn.gomega.ai/scripts/optimizer.min.js" async />
