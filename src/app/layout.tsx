@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Cormorant_Garamond } from 'next/font/google'
+import { Bebas_Neue } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const inter = Inter({ 
@@ -8,26 +9,30 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const cormorant = Cormorant_Garamond({ 
+const bebasNeue = Bebas_Neue({ 
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-cormorant',
+  weight: '400',
+  variable: '--font-bebas',
 })
 
 export const metadata: Metadata = {
-  title: 'Premium Interior Surfaces - Surface Theory',
-  description: 'Transform your home with expert hardwood flooring, tile & stone, cabinetry, and premium interior finishes. Professional installation. Free estimates.',
-  keywords: 'hardwood flooring, tile installation, interior surfaces, cabinetry, home renovation, premium materials',
+  title: 'Surface Theory - Premium Auto Detailing | Virginia',
+  description: 'Professional auto detailing services in Virginia. Paint correction, ceramic coating, interior deep cleaning, and headlight restoration. Precision. Passion. Perfection.',
+  keywords: 'auto detailing, paint correction, ceramic coating, car detailing, headlight restoration, interior cleaning, Virginia, precision detailing',
   openGraph: {
-    title: 'Premium Interior Surfaces - Surface Theory',
-    description: 'Transform your home with expert hardwood flooring, tile & stone, cabinetry, and premium interior finishes.',
+    title: 'Surface Theory - Premium Auto Detailing | Virginia',
+    description: 'Professional auto detailing services in Virginia. Paint correction, ceramic coating, interior deep cleaning, and headlight restoration.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary',
-    title: 'Premium Interior Surfaces - Surface Theory',
-    description: 'Transform your home with expert hardwood flooring, tile & stone, cabinetry, and premium interior finishes.',
+    title: 'Surface Theory - Premium Auto Detailing | Virginia',
+    description: 'Professional auto detailing services in Virginia. Paint correction, ceramic coating, interior deep cleaning.',
+  },
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
   },
 }
 
@@ -37,45 +42,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <head>
-        {/* MEGA Tag Configuration */}
+        {/* MegaTag config — set BEFORE optimizer loads */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-              window.MEGA_TAG_CONFIG = {
-                siteKey: 'PLACEHOLDER_SITE_KEY',
-                pixelId: '2193392604526993',
-                gtmId: '',
-                debug: true
-              };
-            `
+            __html: `window.MEGA_TAG_CONFIG={siteKey:"PLACEHOLDER_SITE_KEY"};window.API_ENDPOINT="https://optimizer.gomega.ai";window.TRACKING_API_ENDPOINT="https://events-api.gomega.ai";`,
           }}
         />
-        {/* MEGA Optimizer Script */}
-        <script
-          id="optimizer-script"
-          src="https://cdn.gomega.ai/scripts/optimizer.min.js"
-          async
-        />
-        
-        {/* Call Tracking Metrics (CTM) Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(c,t,m){
-                c[t]=c[t]||function(){(c[t].q=c[t].q||[]).push(arguments)};
-                c._ctm_s=c._ctm_s||[];c._ctm_s.push(t);
-                var s=m.createElement('script');s.async=1;s.src='//572388.tctm.co/t.js';
-                var x=m.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);
-              })(window, 'ctm', document);
-              ctm('track', '980-505-1218');
-            `
-          }}
-        />
+        <script src="https://cdn.gomega.ai/scripts/optimizer.min.js" async />
       </head>
-      <body className={`${inter.className} antialiased bg-charcoal-dark text-bone`}>
+      <body className={`${inter.className} antialiased bg-background text-text`}>
         {children}
+        
+        {/* CTM — Universal account, afterInteractive */}
+        <Script src="https://572388.tctm.co/t.js" strategy="afterInteractive" />
       </body>
     </html>
   )
