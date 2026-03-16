@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { useTracking } from "@/hooks/useTracking";
 import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
 
-const PHONE = "(704) 595-5554";
-const PHONE_HREF = "tel:7045955554";
+const PHONE = "980-505-1218";
+const PHONE_HREF = "tel:9805051218";
 
 // Professional reveal animation component
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -58,7 +58,9 @@ export default function SurfaceTheoryLanding() {
     lastName: '',
     email: '',
     phone: '',
-    budget: '',
+    timeline: '',
+    services: '',
+    projectDetails: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -93,8 +95,13 @@ export default function SurfaceTheoryLanding() {
       return;
     }
     
-    if (!formData.budget) {
-      setError("Please select a budget option");
+    if (!formData.timeline) {
+      setError("Please select your project timeline");
+      return;
+    }
+    
+    if (!formData.services) {
+      setError("Please select which services you're interested in");
       return;
     }
     
@@ -104,7 +111,9 @@ export default function SurfaceTheoryLanding() {
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
-        budget: formData.budget,
+        timeline: formData.timeline,
+        services: formData.services,
+        projectDetails: formData.projectDetails,
       });
 
       if (result.ok) {
@@ -257,38 +266,50 @@ export default function SurfaceTheoryLanding() {
                       required
                     />
                     
-                    <div className="space-y-4">
-                      <p className="text-surface-dark font-medium text-center">
-                        Our premium surface projects start at $5,000. Is this within your budget?
-                      </p>
-                      <div className="flex gap-3">
-                        <label className="flex-1 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            name="budget" 
-                            value="yes" 
-                            onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                            className="sr-only peer" 
-                            required 
-                          />
-                          <div className="peer-checked:bg-brass peer-checked:border-brass peer-checked:text-surface-dark border-2 border-surface-light/40 text-surface-dark rounded-xl py-4 text-center font-semibold transition-all hover:border-brass">
-                            Yes
-                          </div>
-                        </label>
-                        <label className="flex-1 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            name="budget" 
-                            value="no" 
-                            onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                            className="sr-only peer" 
-                          />
-                          <div className="peer-checked:bg-brass peer-checked:border-brass peer-checked:text-surface-dark border-2 border-surface-light/40 text-surface-dark rounded-xl py-4 text-center font-semibold transition-all hover:border-brass">
-                            No
-                          </div>
-                        </label>
-                      </div>
-                    </div>
+                    <select
+                      name="timeline"
+                      value={formData.timeline}
+                      onChange={(e) => setFormData({...formData, timeline: e.target.value})}
+                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark"
+                      required
+                    >
+                      <option value="">How soon are you looking to start your project?</option>
+                      <option value="immediately">Immediately</option>
+                      <option value="1-3months">1-3 months</option>
+                      <option value="3-6months">3-6 months</option>
+                      <option value="6+months">6+ months</option>
+                      <option value="justExploring">Just Exploring</option>
+                    </select>
+                    
+                    <select
+                      name="services"
+                      value={formData.services}
+                      onChange={(e) => setFormData({...formData, services: e.target.value})}
+                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark"
+                      required
+                    >
+                      <option value="">Which services are you interested in?</option>
+                      <option value="hardwoodFlooring">Hardwood Flooring</option>
+                      <option value="tileStone">Tile & Stone</option>
+                      <option value="staircases">Staircases</option>
+                      <option value="interiorTrim">Interior Trim</option>
+                      <option value="wallFinishes">Wall Finishes</option>
+                      <option value="decking">Decking</option>
+                      <option value="cabinetCAD">Cabinet CAD</option>
+                      <option value="finishPackages">Finish Packages</option>
+                      <option value="garageRemodeling">Garage Remodeling</option>
+                      <option value="multipleServices">Multiple Services</option>
+                      <option value="other">Other</option>
+                    </select>
+                    
+                    <textarea
+                      name="projectDetails"
+                      placeholder="Project Details (optional)"
+                      value={formData.projectDetails}
+                      onChange={(e) => setFormData({...formData, projectDetails: e.target.value})}
+                      rows={4}
+                      className="w-full px-4 py-4 border border-surface-light/30 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brass focus:border-transparent text-surface-dark placeholder:text-surface-dark/50 resize-none"
+                    />
                     
                     {error && (
                       <div className="text-red-600 text-sm bg-red-50 p-4 rounded-xl border border-red-200">
