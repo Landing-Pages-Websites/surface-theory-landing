@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* Account for fixed header */
+}
+
+@theme {
+  /* Surface Theory Brand Colors */
+  --color-charcoal: #1a1a1a;
+  --color-charcoal-dark: #0f0f0f;
+  --color-charcoal-light: #2a2a2a;
+  --color-brass: #C5A46D;
+  --color-brass-dark: #B8975A;
+  --color-brass-light: #D2B280;
+  --color-bone: #f5f5f5;
+  --color-bone-light: #fafafa;
+  
+  /* Additional Semantic Colors */
+  --color-primary: #C5A46D;
+  --color-secondary: #1a1a1a;
+  --color-accent: #C5A46D;
+  --color-success: #059669;
+  --color-error: #dc2626;
+  --color-warning: #d97706;
+  
+  /* Typography Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+}
+
+/* Custom Component Classes */
+.btn-primary {
+  @apply bg-brass text-charcoal-dark px-6 py-3 rounded-lg font-medium hover:bg-brass-light transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply border-2 border-brass text-brass px-6 py-3 rounded-lg font-medium hover:bg-brass hover:text-charcoal-dark transition-all duration-200;
+}
+
+.btn-outline-light {
+  @apply border-2 border-bone text-bone px-6 py-3 rounded-lg font-medium hover:bg-bone hover:text-charcoal-dark transition-all duration-200;
+}
+
+.btn-brass {
+  @apply bg-brass text-charcoal-dark px-6 py-3 rounded-lg font-medium hover:bg-brass-light transition-colors duration-200;
+}
+
+/* Section padding consistent with Surface Theory site */
+.section-padding {
+  @apply py-16 lg:py-20;
+}
+
+.container-editorial {
+  @apply container mx-auto px-4 md:px-6 lg:px-8;
+}
+
+/* Hero cinematic style matching Surface Theory */
+.hero-cinematic {
+  @apply relative min-h-screen flex items-center justify-center bg-charcoal-dark overflow-hidden;
+}
+
+.hero-cinematic-content {
+  @apply relative z-10 text-center max-w-4xl mx-auto;
+}
+
+/* Animation classes for reveal effects */
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typography helpers */
+.font-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+}
+
+.font-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.statement-heading {
+  @apply text-2xl md:text-3xl lg:text-4xl leading-tight;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+}
+
+/* Form Styling */
+.form-field {
+  @apply w-full px-4 py-3 bg-bone border border-charcoal-light rounded-lg text-charcoal focus:outline-none focus:ring-2 focus:ring-brass focus:border-brass;
+}
+
+.form-select {
+  @apply w-full px-4 py-3 bg-bone border border-charcoal-light rounded-lg text-charcoal focus:outline-none focus:ring-2 focus:ring-brass focus:border-brass appearance-none;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 bg-bone border border-charcoal-light rounded-lg text-charcoal focus:outline-none focus:ring-2 focus:ring-brass focus:border-brass min-h-[120px];
+  resize: vertical;
+}
