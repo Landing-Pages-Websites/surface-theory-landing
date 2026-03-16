@@ -106,11 +106,14 @@ export default function SurfaceTheoryLanding() {
     }
     
     try {
+      // Strip phone to digits only for submission
+      const phoneDigits = formData.phone.replace(/\D/g, '');
+      
       const result = await submitLead({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        phone: formData.phone,
+        phone: phoneDigits,
         timeline: formData.timeline,
         services: formData.services,
         projectDetails: formData.projectDetails,
