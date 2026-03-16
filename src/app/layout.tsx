@@ -47,7 +47,7 @@ export default function RootLayout({
         {/* MegaTag config — set BEFORE optimizer loads */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.MEGA_TAG_CONFIG={siteKey:"PLACEHOLDER_SITE_KEY"};`,
+            __html: `window.MEGA_TAG_CONFIG={siteKey:"sk_a6ba309e_649d_44fd_8646_814ad06753bd"};`,
           }}
         />
         <script id="optimizer-script" src="https://cdn.gomega.ai/scripts/optimizer.min.js" async />

@@ -7,8 +7,8 @@ import { useEffect, useCallback, useRef } from "react";
 // ============================================================================
 
 const CONFIG = {
-  CUSTOMER_ID: "PLACEHOLDER_CUSTOMER_ID",           // UUID from admin panel
-  SITE_ID: "PLACEHOLDER_SITE_ID",                   // UUID from Conversions tab
+  CUSTOMER_ID: "86db4f14-3723-4714-8e1e-f4812ad2bfa1",           // UUID from admin panel
+  SITE_ID: "21658d2b-b678-49a4-bc70-e3daf139b03c",                   // UUID from Conversions tab
   SOURCE_PROVIDER: "surface-theory-landing-virginia",   // Unique ID for this page
   ENDPOINT: "https://analytics.gomega.ai/submission/submit",
 };
