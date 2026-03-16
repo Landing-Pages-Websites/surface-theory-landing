@@ -314,7 +314,7 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Stats Section - Professional design */}
-      <section className="py-24 bg-surface-cream">
+      <section id="stats" className="py-24 bg-surface-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
@@ -398,7 +398,7 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Testimonials - Sophisticated layout */}
-      <section className="py-24 bg-surface-cream">
+      <section id="testimonials" className="py-24 bg-surface-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-20">
@@ -445,6 +445,76 @@ export default function SurfaceTheoryLanding() {
           </div>
 
           <Reveal delay={600}>
+            <div className="text-center mt-16">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+                  Get Project Quote
+                </a>
+                <a href={PHONE_HREF} className="border-2 border-brass text-brass px-8 py-4 rounded-lg font-semibold hover:bg-brass hover:text-surface-dark transition-all">
+                  Call {PHONE}
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* About/Process Section */}
+      <section id="about" className="py-24 bg-surface-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <Reveal>
+              <div>
+                <div className="text-brass text-sm font-semibold tracking-[0.2em] uppercase mb-6">Our Process</div>
+                <h2 className="font-serif text-4xl md:text-5xl text-surface-cream mb-8 font-light">
+                  Precision in Every Detail
+                </h2>
+                <p className="text-xl text-surface-cream/70 leading-relaxed mb-8">
+                  Our meticulous approach ensures every project meets the highest standards of craftsmanship 
+                  and durability. From initial consultation to final installation, we maintain the precision 
+                  that defines exceptional surface work.
+                </p>
+                
+                <div className="space-y-6">
+                  {[
+                    { step: "01", title: "Consultation & Planning", desc: "Detailed project assessment and material selection" },
+                    { step: "02", title: "Precision Installation", desc: "Expert installation using specialized techniques" },
+                    { step: "03", title: "Quality Assurance", desc: "Thorough inspection and finishing touches" }
+                  ].map((item, index) => (
+                    <div key={item.step} className="flex gap-6">
+                      <div className="text-brass font-serif text-xl font-light">{item.step}</div>
+                      <div>
+                        <h3 className="text-surface-cream font-semibold mb-2">{item.title}</h3>
+                        <p className="text-surface-cream/60">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <div className="bg-surface-light/20 p-8 lg:p-10 rounded-2xl border border-surface-light/20">
+                <h3 className="font-serif text-2xl text-surface-cream mb-6">Why Trade Professionals Choose Us</h3>
+                <div className="space-y-4">
+                  {[
+                    "Licensed & insured in all service areas",
+                    "Specialized tools and installation techniques", 
+                    "Direct relationships with premium suppliers",
+                    "Flexible scheduling for project timelines",
+                    "Comprehensive warranty on materials & labor"
+                  ].map((benefit, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-brass rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-surface-cream/80">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+          
+          <Reveal delay={400}>
             <div className="text-center mt-16">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
