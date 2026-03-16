@@ -47,9 +47,9 @@ export default function SurfaceTheoryLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  // Initialize tracking with placeholder siteKey (will be replaced after MEGA Admin registration)
+  // Initialize tracking
   useTracking({
-    siteKey: "PLACEHOLDER_SITE_KEY",
+    siteKey: "sk_mmee4055_st_virginia_detailing",
   });
 
   const { submit: submitLead } = useMegaLeadForm();
