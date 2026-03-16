@@ -65,7 +65,7 @@ export default function SurfaceTheoryLanding() {
 
   // Initialize tracking
   useTracking({
-    siteKey: "sk_mmee4055_st_surfaces_nc",
+    siteKey: "sk_mmtr8zpr_cdhmo9hb7ka",
   });
 
   const { submit: submitLead } = useMegaLeadForm();
