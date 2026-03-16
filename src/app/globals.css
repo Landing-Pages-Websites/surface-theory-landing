@@ -1,6 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Surface Theory Brand Colors - From Actual Website */
+@theme {
+  --color-surface-dark: #1a1a1a;
+  --color-surface-darker: #0f0f0f;
+  --color-surface-light: #2a2a2a;
+  --color-brass: #c5a46d;
+  --color-brass-light: #d4b87c;
+  --color-brass-dark: #a68a5a;
+  --color-surface-cream: #f5f4f0;
+}
 
 /* Typography */
 .font-serif {
@@ -10,6 +19,7 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 /* Custom animations */
