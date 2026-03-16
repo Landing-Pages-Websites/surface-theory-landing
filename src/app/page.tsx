@@ -5,8 +5,8 @@ import { Reveal } from "@/components/Reveal";
 import { useTracking } from "@/hooks/useTracking";
 import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
 
-const PHONE = "(980) 505-1218";
-const PHONE_HREF = "tel:9805051218";
+const PHONE = "(704) 595-5554";
+const PHONE_HREF = "tel:7045955554";
 
 // Format phone number as user types
 function formatPhone(value: string): string {
@@ -24,10 +24,10 @@ function isValidPhone(value: string): boolean {
 function DualCTA({ primary, href }: { primary: string; href: string }) {
   return (
     <div className="mt-10 flex flex-col items-center gap-3">
-      <a href={href} className="btn-primary text-lg px-8 py-4">
+      <a href={href} className="btn-brass text-lg px-8 py-4">
         {primary}
       </a>
-      <a href={PHONE_HREF} className="btn-secondary px-6 py-3">
+      <a href={PHONE_HREF} className="btn-outline-light px-6 py-3">
         Or call us: {PHONE}
       </a>
     </div>
@@ -103,223 +103,240 @@ export default function SurfaceTheoryLanding() {
   return (
     <>
       {/* Header: Logo + CTA only — NO nav links */}
-      <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur border-b">
+      <header className="fixed top-0 w-full z-50 bg-charcoal-dark/90 backdrop-blur-sm border-b border-charcoal-light/20">
         <div className="container-responsive py-4 flex items-center justify-between">
+          {/* Logo matching their exact branding */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center">
-              <span className="text-white font-bold text-sm">ST</span>
+            <div className="w-10 h-12 relative">
+              <svg viewBox="0 0 40 48" fill="none" className="w-full h-full">
+                <rect x="1" y="1" width="38" height="46" stroke="#C5A46D" strokeWidth="1.5" fill="none"></rect>
+                <path d="M20 6 C12 6 8 12 8 18 C8 24 14 28 20 28 C26 28 32 32 32 38 C32 44 26 46 20 46" stroke="#C5A46D" strokeWidth="1.5" fill="none"></path>
+              </svg>
             </div>
-            <div className="font-display text-2xl text-slate-800">SURFACE THEORY</div>
+            <div>
+              <span className="font-serif text-lg tracking-[0.2em] text-bone block leading-tight">SURFACE</span>
+              <span className="font-serif text-lg tracking-[0.2em] text-bone block leading-tight">THEORY</span>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
-            <a href={PHONE_HREF} className="hidden sm:flex btn-secondary">
+            <a href={PHONE_HREF} className="hidden sm:flex btn-outline-light">
               {PHONE}
             </a>
-            <a href="#contact" className="btn-primary">
+            <a href="#contact" className="btn-brass">
               Get Quote
             </a>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900">
-        <div className="container-responsive grid lg:grid-cols-2 gap-12 items-center py-20">
-          {/* Left: Headlines & Copy */}
-          <div className="space-y-8">
-            <Reveal>
-              <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm">
-                PREMIUM MATERIALS • EXPERT INSTALLATION
-              </span>
-              <h1 className="font-display text-5xl lg:text-7xl text-white leading-tight">
-                WHERE <span className="text-amber-400">CRAFTSMANSHIP</span> MEETS MATERIAL SCIENCE
-              </h1>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                Complete interior surface solutions for builders, designers, and contractors. 
-                Premium hardwood flooring, tile & stone, custom staircases, and architectural wall finishes.
-              </p>
-            </Reveal>
+      {/* Hero Section - exact match to their styling */}
+      <section className="hero-cinematic">
+        <div className="hero-cinematic-content px-4">
+          <span className="font-label text-brass block mb-6 animate-fade-in tracking-[0.2em]">
+            Premium Surfaces
+          </span>
+          <h1 className="font-serif text-bone font-light leading-[1.05] mb-8 animate-fade-in-up" style={{
+            fontSize: "clamp(2.5rem, 1.5rem + 5vw, 5.5rem)",
+            letterSpacing: "-0.02em"
+          }}>
+            Where <strong className="text-brass">Craftsmanship</strong> Meets Material Science
+          </h1>
+          <p className="text-bone/70 text-lg md:text-xl max-w-lg mx-auto mb-10 animate-fade-in-up delay-200 tracking-wide">
+            Complete interior solutions curated for the trade. Premium materials, precision installation, seamless execution.
+          </p>
+          
+          {/* Hero Form - matching their site */}
+          <div className="bg-bone/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border max-w-md mx-auto">
+            <h2 className="font-serif text-2xl text-charcoal mb-6 text-center">
+              Get Your Project Quote
+            </h2>
             
-            <Reveal delay={200}>
-              <div className="grid grid-cols-2 gap-6 py-6">
-                <div className="text-center">
-                  <div className="font-display text-3xl text-amber-400">15+</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">Years Experience</div>
+            {isSubmitted ? (
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-brass rounded-full flex items-center justify-center mx-auto">
+                  <svg className="w-8 h-8 text-bone" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <div className="text-center">
-                  <div className="font-display text-3xl text-amber-400">500+</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider">Projects Completed</div>
-                </div>
+                <h3 className="text-xl text-charcoal">Thank You!</h3>
+                <p className="text-charcoal/60">
+                  We'll contact you within 2 hours to discuss your premium surface project.
+                </p>
               </div>
-              <DualCTA primary="Get Project Quote" href="#contact" />
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <input
+                    name="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                    className="px-4 py-3 border border-charcoal-light/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brass text-charcoal"
+                    required
+                  />
+                  <input
+                    name="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                    className="px-4 py-3 border border-charcoal-light/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brass text-charcoal"
+                    required
+                  />
+                </div>
+                
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="w-full px-4 py-3 border border-charcoal-light/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brass text-charcoal"
+                  required
+                />
+                
+                <input
+                  name="phone"
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="(555) 123-4567"
+                  value={formData.phone}
+                  onChange={handlePhoneChange}
+                  className="w-full px-4 py-3 border border-charcoal-light/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brass text-charcoal"
+                  pattern="^\(\d{3}\) \d{3}-\d{4}$"
+                  title="Please enter a valid 10-digit phone number"
+                  required
+                />
+                
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-charcoal">
+                    Our premium surface projects start at $5,000. Is this within your budget?
+                  </p>
+                  <div className="flex gap-3">
+                    <label className="flex-1 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="budget" 
+                        value="yes" 
+                        onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                        className="sr-only peer" 
+                        required 
+                      />
+                      <div className="peer-checked:bg-brass peer-checked:border-brass peer-checked:text-bone border-2 border-charcoal-light/30 text-charcoal rounded-lg py-2.5 text-center font-semibold transition-all hover:border-brass">
+                        Yes
+                      </div>
+                    </label>
+                    <label className="flex-1 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="budget" 
+                        value="no" 
+                        onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                        className="sr-only peer" 
+                      />
+                      <div className="peer-checked:bg-brass peer-checked:border-brass peer-checked:text-bone border-2 border-charcoal-light/30 text-charcoal rounded-lg py-2.5 text-center font-semibold transition-all hover:border-brass">
+                        No
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                
+                {error && (
+                  <div className="text-red-600 text-sm bg-red-50 p-3 rounded">
+                    {error}
+                  </div>
+                )}
+                
+                <button
+                  type="submit"
+                  className="w-full bg-brass text-bone py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors"
+                >
+                  Get My Project Quote
+                </button>
+                
+                <p className="text-charcoal/50 text-xs text-center">
+                  Trade professionals only. We respect your privacy.
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="bg-charcoal-dark py-16 lg:py-20">
+        <div className="container-responsive">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+            <Reveal delay={0}>
+              <div className="text-center">
+                <span className="block font-serif text-4xl lg:text-5xl font-light text-brass leading-none">15+</span>
+                <span className="block text-xs text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Years of Experience</span>
+              </div>
+            </Reveal>
+            <Reveal delay={100}>
+              <div className="text-center">
+                <span className="block font-serif text-4xl lg:text-5xl font-light text-brass leading-none">500+</span>
+                <span className="block text-xs text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Projects Completed</span>
+              </div>
+            </Reveal>
+            <Reveal delay={200}>
+              <div className="text-center">
+                <span className="block font-serif text-4xl lg:text-5xl font-light text-brass leading-none">100%</span>
+                <span className="block text-xs text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">Trade Certified</span>
+              </div>
+            </Reveal>
+            <Reveal delay={300}>
+              <div className="text-center">
+                <span className="block font-serif text-4xl lg:text-5xl font-light text-brass leading-none">5</span>
+                <span className="block text-xs text-bone/50 uppercase tracking-[0.15em] mt-3 font-medium">States Served</span>
+              </div>
             </Reveal>
           </div>
-
-          {/* Right: Lead Form */}
-          <Reveal delay={300}>
-            <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border">
-              <h2 className="font-display text-2xl text-slate-800 mb-6 text-center">
-                Get Your Project Quote
-              </h2>
-              
-              {isSubmitted ? (
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mx-auto">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl text-slate-800">Thank You!</h3>
-                  <p className="text-gray-600">
-                    We'll contact you within 2 hours to discuss your surface project requirements.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <input
-                      name="firstName"
-                      type="text"
-                      placeholder="First Name"
-                      value={formData.firstName}
-                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="form-field bg-white"
-                      required
-                    />
-                    <input
-                      name="lastName"
-                      type="text"
-                      placeholder="Last Name"
-                      value={formData.lastName}
-                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="form-field bg-white"
-                      required
-                    />
-                  </div>
-                  
-                  <input
-                    name="email"
-                    type="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="form-field bg-white"
-                    required
-                  />
-                  
-                  <input
-                    name="phone"
-                    type="tel"
-                    inputMode="numeric"
-                    placeholder="(555) 123-4567"
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    className="form-field bg-white"
-                    pattern="^\(\d{3}\) \d{3}-\d{4}$"
-                    title="Please enter a valid 10-digit phone number"
-                    required
-                  />
-                  
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-slate-700">
-                      Our premium surface projects start at $5,000. Is this within your budget?
-                    </p>
-                    <div className="flex gap-3">
-                      <label className="flex-1 cursor-pointer">
-                        <input 
-                          type="radio" 
-                          name="budget" 
-                          value="yes" 
-                          onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                          className="sr-only peer" 
-                          required 
-                        />
-                        <div className="peer-checked:bg-amber-600 peer-checked:border-amber-600 peer-checked:text-white border-2 border-gray-300 text-gray-700 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-amber-600">
-                          Yes
-                        </div>
-                      </label>
-                      <label className="flex-1 cursor-pointer">
-                        <input 
-                          type="radio" 
-                          name="budget" 
-                          value="no" 
-                          onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                          className="sr-only peer" 
-                        />
-                        <div className="peer-checked:bg-amber-600 peer-checked:border-amber-600 peer-checked:text-white border-2 border-gray-300 text-gray-700 rounded-lg py-2.5 text-center font-semibold transition-all hover:border-amber-600">
-                          No
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                  
-                  {error && (
-                    <div className="text-red-600 text-sm bg-red-50 p-3 rounded">
-                      {error}
-                    </div>
-                  )}
-                  
-                  <button
-                    type="submit"
-                    className="btn-primary w-full text-lg py-4"
-                  >
-                    Get My Project Quote
-                  </button>
-                  
-                  <p className="text-gray-500 text-xs text-center">
-                    Trade professionals only. We respect your privacy.
-                  </p>
-                </form>
-              )}
-            </div>
+          
+          <Reveal delay={400}>
+            <DualCTA primary="Get Project Quote" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="section-padding bg-white">
+      <section className="bg-charcoal-dark py-16 lg:py-24">
         <div className="container-responsive">
-          <Reveal>
-            <div className="text-center mb-16">
-              <span className="text-amber-600 font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
-              <h2 className="font-display text-4xl lg:text-6xl text-slate-800 mb-6">
-                Premium Surface Solutions
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Curated for the trade. Premium materials, precision installation, seamless execution.
-              </p>
-            </div>
-          </Reveal>
+          <div className="text-center mb-16">
+            <span className="font-label text-brass block mb-4 tracking-[0.2em]">What We Do</span>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-bone">Our Services</h2>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {[
               {
                 number: "01",
                 title: "Hardwood Flooring",
-                description: "Pre-finished and sand-finish options crafted for enduring beauty. Domestic and exotic hardwoods that elevate every space."
+                description: "Pre-finished and sand-finish options crafted for enduring beauty. We source the finest domestic and exotic hardwoods, delivering timeless elegance that elevates every space."
               },
               {
                 number: "02", 
                 title: "Tile & Stone",
-                description: "Premium natural stone and porcelain tile with expert installation. From marble to travertine, precision craftsmanship."
+                description: "Premium natural stone and porcelain tile with expert installation. From marble to travertine, we bring your vision to life with precision craftsmanship."
               },
               {
                 number: "03",
-                title: "Custom Staircases", 
-                description: "Custom design and precision craftsmanship for statement staircases. Every detail from tread profiles to railing design."
+                title: "Staircases", 
+                description: "Custom design and precision craftsmanship for statement staircases. Every detail considered, from tread profiles to railing design."
               },
               {
                 number: "04",
                 title: "Wall Finishes",
-                description: "Wallpaper, specialty coatings, and architectural treatments. Curated selections from the world's finest makers."
+                description: "Wallpaper, specialty coatings, and architectural wall treatments that transform interiors. Curated selections from the world's finest makers."
               }
             ].map((service, index) => (
               <Reveal key={service.number} delay={index * 100}>
-                <div className="bg-slate-50 p-8 rounded-2xl hover:shadow-lg transition-all border-l-4 border-amber-600">
-                  <div className="text-amber-600 font-display text-3xl font-bold mb-4">{service.number}</div>
-                  <h3 className="font-display text-xl text-slate-800 mb-4">{service.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                <div className="bg-charcoal-light/10 p-8 rounded-2xl hover:bg-charcoal-light/20 transition-all border-l-4 border-brass">
+                  <div className="text-brass font-serif text-3xl font-light mb-4">{service.number}</div>
+                  <h3 className="font-serif text-xl text-bone mb-4">{service.title}</h3>
+                  <p className="text-bone/60 leading-relaxed">{service.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -332,41 +349,27 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Trade Program */}
-      <section className="section-padding bg-slate-800 text-white">
+      <section className="bg-bone-light py-16 lg:py-24">
         <div className="container-responsive">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto text-center">
             <Reveal>
-              <div>
-                <span className="text-amber-400 font-semibold tracking-wider uppercase text-sm">For Professionals</span>
-                <h2 className="font-display text-4xl lg:text-5xl mb-6">Trade Program</h2>
-                <p className="text-xl text-gray-300 mb-8">
-                  Exclusive access, preferred pricing, and dedicated support for qualified professionals.
-                </p>
-                <div className="grid grid-cols-2 gap-6">
-                  {[
-                    "Trade Pricing",
-                    "Design Support", 
-                    "Sample Service",
-                    "Warranty Backed"
-                  ].map((benefit) => (
-                    <div key={benefit} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
-                      <span className="text-gray-300">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-            
-            <Reveal delay={200}>
-              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
-                <h3 className="font-display text-2xl mb-6">Join Our Trade Network</h3>
-                <p className="text-gray-300 mb-6">
-                  Get exclusive access to premium materials and preferred pricing for qualified trade professionals.
-                </p>
-                <a href="#contact" className="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors">
-                  Apply for Trade Access
-                </a>
+              <span className="font-label text-brass-dark block mb-6 tracking-[0.2em]">For Professionals</span>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal mb-6">Trade Program</h2>
+              <p className="text-charcoal/60 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                Exclusive access, preferred pricing, and dedicated support for qualified professionals.
+              </p>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                {[
+                  { title: "Trade Pricing", desc: "Exclusive rates for qualified professionals" },
+                  { title: "Design Support", desc: "Expert guidance on material selection" },
+                  { title: "Sample Service", desc: "Curated samples delivered to your door" },
+                  { title: "Warranty Backed", desc: "Extended protection on materials & labor" }
+                ].map((benefit, i) => (
+                  <div key={benefit.title} className="text-center">
+                    <h3 className="text-charcoal text-sm font-medium mb-1">{benefit.title}</h3>
+                    <p className="text-charcoal/50 text-sm">{benefit.desc}</p>
+                  </div>
+                ))}
               </div>
             </Reveal>
           </div>
@@ -374,77 +377,98 @@ export default function SurfaceTheoryLanding() {
       </section>
 
       {/* Locations */}
-      <section className="section-padding bg-white">
+      <section className="bg-charcoal-dark py-16 lg:py-24">
         <div className="container-responsive text-center">
           <Reveal>
-            <span className="text-amber-600 font-semibold tracking-wider uppercase text-sm">Our Reach</span>
-            <h2 className="font-display text-4xl lg:text-5xl text-slate-800 mb-12">North Carolina Locations</h2>
+            <span className="font-label text-brass block mb-6 tracking-[0.2em]">Experience</span>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-bone mb-6">Visit Our Showroom</h2>
+            <p className="text-bone/60 text-lg leading-relaxed mb-10 max-w-lg mx-auto">
+              Experience our materials in person. See, touch, and compare premium surfaces in a curated environment designed for professionals.
+            </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10">
             {[
-              { city: "Charlotte", status: "Coming Soon" },
-              { city: "Charleston", status: "Coming Soon" },
-              { city: "Asheville", status: "2026" },
-              { city: "Raleigh", status: "2026" }
+              { city: "Charlotte", state: "NC", status: "Coming Soon" },
+              { city: "Charleston", state: "SC", status: "Coming Soon" },
+              { city: "Asheville", state: "NC", status: "2026" },
+              { city: "Raleigh", state: "NC", status: "2026" }
             ].map((location, index) => (
               <Reveal key={location.city} delay={index * 100}>
                 <div className="text-center">
-                  <h3 className="font-display text-xl text-slate-800 mb-2">{location.city}</h3>
-                  <p className="text-amber-600 font-semibold">{location.status}</p>
+                  <span className="text-bone font-medium text-sm">{location.city}, {location.state}</span>
+                  <span className="text-brass text-xs block">{location.status}</span>
                 </div>
               </Reveal>
             ))}
           </div>
 
           <Reveal delay={500}>
-            <DualCTA primary="Get Project Quote" href="#contact" />
+            <DualCTA primary="Plan Your Visit" href="#contact" />
           </Reveal>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section id="contact" className="section-padding bg-gradient-to-br from-slate-900 to-amber-900 text-white">
+      <section id="contact" className="py-20 lg:py-28 bg-charcoal-dark">
         <div className="container-responsive text-center">
           <Reveal>
-            <h2 className="font-display text-4xl lg:text-6xl mb-6">
-              Ready to Start Your Surface Project?
+            <span className="font-label text-brass block mb-6 tracking-[0.2em]">Get Started</span>
+            <h2 className="font-serif text-3xl md:text-4xl text-bone mb-6">
+              Ready to Start Your Project?
             </h2>
-            <p className="text-xl mb-10 max-w-2xl mx-auto text-white/90">
-              Let's discuss how Surface Theory can elevate your next project with premium materials and expert installation.
+            <p className="text-bone/50 mb-10 max-w-lg mx-auto text-lg">
+              Let's discuss how Surface Theory can simplify your next project with premium materials and expert installation.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <a href="#hero" className="bg-amber-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-amber-700 transition-colors">
-                Get Project Quote
-              </a>
-              <div className="flex items-center gap-4">
-                <span className="text-white/80">or call us:</span>
-                <a href={PHONE_HREF} className="font-display text-2xl hover:text-amber-300 transition-colors">
-                  {PHONE}
-                </a>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="#hero" className="btn-brass">Get a Quote</a>
+              <a href={PHONE_HREF} className="btn-outline-light">Call {PHONE}</a>
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-white py-8">
+      <footer className="bg-charcoal text-bone py-16 lg:py-20">
         <div className="container-responsive text-center">
-          <p className="text-white/60 text-sm">
-            © 2026 Surface Theory. All rights reserved. | 
-            <a href="#" className="hover:text-amber-400 transition-colors ml-1">Privacy Policy</a> | 
-            <a href="#" className="hover:text-amber-400 transition-colors ml-1">Terms</a>
-          </p>
+          <div className="mb-16">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="w-10 h-12">
+                <svg viewBox="0 0 40 48" fill="none" className="w-full h-full">
+                  <rect x="1" y="1" width="38" height="46" stroke="#C5A46D" strokeWidth="1.5" fill="none"></rect>
+                  <path d="M20 6 C12 6 8 12 8 18 C8 24 14 28 20 28 C26 28 32 32 32 38 C32 44 26 46 20 46" stroke="#C5A46D" strokeWidth="1.5" fill="none"></path>
+                </svg>
+              </div>
+              <div>
+                <span className="font-serif text-lg tracking-[0.2em] text-bone block leading-tight">SURFACE</span>
+                <span className="font-serif text-lg tracking-[0.2em] text-bone block leading-tight">THEORY</span>
+              </div>
+            </div>
+            <p className="text-bone/50 text-sm max-w-md mx-auto leading-relaxed">
+              Premium Materials & Expert Installation
+            </p>
+          </div>
+          
+          <div className="border-t border-charcoal-light/20 pt-6">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-bone/30 text-xs tracking-wider">
+                © 2026 Surface Theory. All rights reserved.
+              </p>
+              <div className="flex gap-6">
+                <a href="#" className="text-bone/30 hover:text-bone/60 transition-colors text-xs tracking-wider">Privacy Policy</a>
+                <a href="#" className="text-bone/30 hover:text-bone/60 transition-colors text-xs tracking-wider">Terms of Service</a>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
 
       {/* Floating Sticky CTA */}
       {stickyVisible && (
-        <div className="fixed bottom-6 right-6 z-50 bg-amber-600 text-white p-4 rounded-xl shadow-2xl animate-fade-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-brass text-bone p-4 rounded-xl shadow-2xl">
           <div className="text-center">
-            <a href="#contact" className="block bg-white text-amber-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm mb-2">
+            <a href="#contact" className="block bg-bone text-brass px-4 py-2 rounded-lg font-semibold hover:bg-bone/90 transition-colors text-sm">
               Get Quote
             </a>
           </div>
