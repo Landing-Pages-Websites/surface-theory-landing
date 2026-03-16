@@ -287,7 +287,7 @@ export default function SurfaceTheoryLanding() {
               <div className="text-sm text-text-light uppercase tracking-wider">Satisfaction Rate</div>
             </Reveal>
             <Reveal delay={300}>
-              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">5★</div>
+              <div className="font-display text-4xl lg:text-5xl text-primary mb-2">5.0</div>
               <div className="text-sm text-text-light uppercase tracking-wider">Average Rating</div>
             </Reveal>
           </div>
@@ -318,22 +318,22 @@ export default function SurfaceTheoryLanding() {
               {
                 title: "Paint Correction",
                 description: "Remove swirl marks, scratches, and oxidation to restore your paint's original luster.",
-                icon: "🎨"
+                icon: ""
               },
               {
                 title: "Ceramic Coating",
                 description: "Long-lasting protection that keeps your car looking showroom-fresh for years.",
-                icon: "🛡️"
+                icon: ""
               },
               {
                 title: "Interior Deep Clean",
                 description: "Complete interior restoration including leather conditioning and fabric protection.",
-                icon: "✨"
+                icon: ""
               },
               {
                 title: "Headlight Restoration",
                 description: "Crystal-clear headlights that improve visibility and vehicle appearance.",
-                icon: "💡"
+                icon: ""
               }
             ].map((service, index) => (
               <Reveal key={service.title} delay={index * 100}>

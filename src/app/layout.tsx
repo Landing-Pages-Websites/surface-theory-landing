@@ -47,10 +47,10 @@ export default function RootLayout({
         {/* MegaTag config — set BEFORE optimizer loads */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.MEGA_TAG_CONFIG={siteKey:"PLACEHOLDER_SITE_KEY"};window.API_ENDPOINT="https://optimizer.gomega.ai";window.TRACKING_API_ENDPOINT="https://events-api.gomega.ai";`,
+            __html: `window.MEGA_TAG_CONFIG={siteKey:"PLACEHOLDER_SITE_KEY"};`,
           }}
         />
-        <script src="https://cdn.gomega.ai/scripts/optimizer.min.js" async />
+        <script id="optimizer-script" src="https://cdn.gomega.ai/scripts/optimizer.min.js" async />
       </head>
       <body className={`${inter.className} antialiased bg-background text-text`}>
         {children}
