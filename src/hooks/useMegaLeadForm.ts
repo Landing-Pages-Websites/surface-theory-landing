@@ -211,8 +211,8 @@ export const useMegaLeadForm = (): UseMegaLeadFormReturn => {
         }
         formData.phone = phoneDigits; // Normalize to digits only
       }
-      if (!formData.firstName || !formData.email) {
-        throw new Error("firstName and email are required");
+      if (!formData.firstName || !formData.email || !formData.timeline || !formData.services) {
+        throw new Error("firstName, email, timeline, and services are required");
       }
 
       const attribution = initAttribution();

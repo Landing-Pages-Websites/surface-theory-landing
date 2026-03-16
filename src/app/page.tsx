@@ -151,7 +151,7 @@ export default function SurfaceTheoryLanding() {
               <a href={PHONE_HREF} className="hidden sm:block text-surface-cream/80 hover:text-brass transition-colors font-medium">
                 {PHONE}
               </a>
-              <a href="#quote" className="bg-brass text-surface-dark px-6 py-2.5 rounded-lg font-semibold hover:bg-brass-light transition-colors">
+              <a href="#hero" className="bg-brass text-surface-dark px-6 py-2.5 rounded-lg font-semibold hover:bg-brass-light transition-colors">
                 Get Quote
               </a>
             </div>
@@ -191,7 +191,7 @@ export default function SurfaceTheoryLanding() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                  <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-all shadow-lg">
+                  <a href="#hero" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-all shadow-lg">
                     Get Project Quote
                   </a>
                   <a href={PHONE_HREF} className="border-2 border-brass text-brass px-8 py-4 rounded-lg font-semibold hover:bg-brass hover:text-surface-dark transition-all">
@@ -420,7 +420,7 @@ export default function SurfaceTheoryLanding() {
           <Reveal delay={600}>
             <div className="text-center mt-16">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+                <a href="#hero" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
                   Get Project Quote
                 </a>
                 <a href={PHONE_HREF} className="border-2 border-brass text-brass px-8 py-4 rounded-lg font-semibold hover:bg-brass hover:text-surface-dark transition-all">
@@ -482,7 +482,7 @@ export default function SurfaceTheoryLanding() {
           <Reveal delay={600}>
             <div className="text-center mt-16">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+                <a href="#hero" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
                   Get Project Quote
                 </a>
                 <a href={PHONE_HREF} className="border-2 border-brass text-brass px-8 py-4 rounded-lg font-semibold hover:bg-brass hover:text-surface-dark transition-all">
@@ -537,7 +537,7 @@ export default function SurfaceTheoryLanding() {
 
           <Reveal delay={600}>
             <div className="text-center mt-16">
-              <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+              <a href="#hero" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
                 Start Your Project
               </a>
             </div>
@@ -603,7 +603,7 @@ export default function SurfaceTheoryLanding() {
           <Reveal delay={400}>
             <div className="text-center mt-16">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#quote" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
+                <a href="#hero" className="bg-brass text-surface-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg">
                   Get Project Quote
                 </a>
                 <a href={PHONE_HREF} className="border-2 border-brass text-brass px-8 py-4 rounded-lg font-semibold hover:bg-brass hover:text-surface-dark transition-all">
@@ -683,7 +683,7 @@ export default function SurfaceTheoryLanding() {
       {/* Floating Sticky CTA */}
       {stickyVisible && (
         <div className="fixed bottom-8 right-8 z-50 bg-brass text-surface-dark p-4 rounded-xl shadow-2xl transform transition-all hover:scale-105">
-          <a href="#quote" className="block bg-surface-dark text-brass px-4 py-3 rounded-lg font-semibold hover:bg-surface-light transition-colors text-sm">
+          <a href="#hero" className="block bg-surface-dark text-brass px-4 py-3 rounded-lg font-semibold hover:bg-surface-light transition-colors text-sm">
             Get Quote
           </a>
         </div>
