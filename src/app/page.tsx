@@ -72,6 +72,40 @@ export default function SurfaceTheoryLanding() {
 
   const { submit: submitLead } = useMegaLeadForm();
 
+  // Persist query params across hash navigation and page lifecycle
+  useEffect(() => {
+    const params = window.location.search;
+    if (params) {
+      // Store original query params in sessionStorage
+      sessionStorage.setItem('_mega_query_params', params);
+    }
+
+    // Restore params if they were stripped (e.g., by client-side navigation)
+    const stored = sessionStorage.getItem('_mega_query_params');
+    if (!params && stored) {
+      const newUrl = window.location.pathname + stored + window.location.hash;
+      window.history.replaceState(null, '', newUrl);
+    }
+
+    // Intercept hash link clicks to preserve query params
+    const handleClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const savedParams = sessionStorage.getItem('_mega_query_params') || window.location.search;
+        const newUrl = window.location.pathname + savedParams + href;
+        window.history.replaceState(null, '', newUrl);
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   // Show sticky CTA after scrolling past hero
   useEffect(() => {
     const handleScroll = () => {
