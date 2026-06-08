@@ -72,6 +72,10 @@ export default function SurfaceTheoryLanding() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
+  // Synchronous in-flight lock. State updates are async/batched, so a stale
+  // `isSubmitting` closure cannot block rapid synchronous re-clicks — a ref
+  // flips immediately and is what actually prevents duplicate POSTs.
+  const submittingRef = useRef(false);
 
   // Initialize tracking
   useTracking({
@@ -132,8 +136,9 @@ export default function SurfaceTheoryLanding() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // In-flight guard — prevents duplicate Keystone rows from rapid clicks
-    if (isSubmitting) return;
+    // In-flight guard — prevents duplicate Keystone rows from rapid clicks.
+    // Ref check is synchronous and authoritative; state drives the UI.
+    if (submittingRef.current) return;
 
     if (!isValidPhone(formData.phone)) {
       setError("Please enter a valid 10-digit phone number");
@@ -150,6 +155,7 @@ export default function SurfaceTheoryLanding() {
       return;
     }
 
+    submittingRef.current = true;
     setIsSubmitting(true);
     try {
       // Strip phone to digits only for submission
@@ -178,6 +184,7 @@ export default function SurfaceTheoryLanding() {
       console.error("Form submission error:", err);
       setError(`Submission failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
+      submittingRef.current = false;
       setIsSubmitting(false);
     }
   };
@@ -185,7 +192,7 @@ export default function SurfaceTheoryLanding() {
   // Validate-first, then programmatic submit so the Mega optimizer cannot
   // auto-fire a duplicate off a native submit-button event (HARD RULE 3/5).
   const handleSubmitClick = () => {
-    if (isSubmitting) return;
+    if (submittingRef.current) return;
     const form = formRef.current;
     if (!form) return;
     if (!form.checkValidity()) {
