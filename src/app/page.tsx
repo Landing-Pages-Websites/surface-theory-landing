@@ -7,6 +7,12 @@ import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
 const PHONE = "980-505-1218";
 const PHONE_HREF = "tel:9805051218";
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[];
+  }
+}
+
 // Professional reveal animation component
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -63,7 +69,9 @@ export default function SurfaceTheoryLanding() {
     projectDetails: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   // Initialize tracking
   useTracking({
@@ -123,7 +131,10 @@ export default function SurfaceTheoryLanding() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
+    // In-flight guard — prevents duplicate Keystone rows from rapid clicks
+    if (isSubmitting) return;
+
     if (!isValidPhone(formData.phone)) {
       setError("Please enter a valid 10-digit phone number");
       return;
@@ -138,7 +149,8 @@ export default function SurfaceTheoryLanding() {
       setError("Please select which services you're interested in");
       return;
     }
-    
+
+    setIsSubmitting(true);
     try {
       // Strip phone to digits only for submission
       const phoneDigits = formData.phone.replace(/\D/g, '');
@@ -154,13 +166,33 @@ export default function SurfaceTheoryLanding() {
       });
 
       if (result.ok) {
+        // GTM conversion event — fires exactly once per successful submit
+        if (typeof window !== "undefined") {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'form_submission' });
+        }
         setIsSubmitted(true);
         setError('');
       }
     } catch (err) {
       console.error("Form submission error:", err);
       setError(`Submission failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    } finally {
+      setIsSubmitting(false);
     }
+  };
+
+  // Validate-first, then programmatic submit so the Mega optimizer cannot
+  // auto-fire a duplicate off a native submit-button event (HARD RULE 3/5).
+  const handleSubmitClick = () => {
+    if (isSubmitting) return;
+    const form = formRef.current;
+    if (!form) return;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    form.requestSubmit();
   };
 
   return (
@@ -258,7 +290,7 @@ export default function SurfaceTheoryLanding() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-6">
                     <div className="grid grid-cols-2 gap-4">
                       <input
                         name="firstName"
@@ -355,10 +387,12 @@ export default function SurfaceTheoryLanding() {
                     )}
                     
                     <button
-                      type="submit"
-                      className="w-full bg-brass text-surface-dark py-4 rounded-xl font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg"
+                      type="button"
+                      onClick={handleSubmitClick}
+                      disabled={isSubmitting}
+                      className="w-full bg-brass text-surface-dark py-4 rounded-xl font-semibold text-lg hover:bg-brass-light transition-colors shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Get My Project Quote
+                      {isSubmitting ? 'Sending…' : 'Get My Project Quote'}
                     </button>
                     
                     <p className="text-surface-dark/60 text-sm text-center">
